@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<style>
+body {background-color: powderblue;
+font-family: 'Open Sans', sans-serif;
+    color: #656c6d;
+    position: absolute;
+    left: 20%;
+    top: 30%;}
+
+</style>
+    <title>Log in to my diving portal..</title>
+
+  <body>
+  <div>
+    {% block content %}
+      {% if not name %}
+  <form action="/login" method="post" accept-charset="utf-8">
+      Username:<input type="text" name="username">
+      Password:<input type="password" name="password">
+      <input type="submit" value="Login">
+  </form>
+
+<!--  <input type="checkbox" checked="checked" name="remember_me"> Remember me-->
+
+     <!--   <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button> -->
+  <!--<span class="psw">Forgot <a href="#">password?</a></span>    -->
+      <!--<a href="/register_page" >Register</a>          -->
+  {% else%}
+
+   {% endif %}
+      {% endblock content %}
+  </div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base" %}
+
+{% block content %}
+    <div class="w3-container w3-center">
+
+        <b class="w3-wide w3-text-teal">MARGINALEN CUP</b>
+        <p class="w3-justify">Marginalen Cup är avklarad () </p>
+
+        <b class="w3-wide w3-text-teal">DM</b>
+        <p class="w3-justify">Polisen IF anordnade DM lördagen den 24e november (http://www.polisensimhopp.se/docs/147/2993/Resultat%20DM%202018.pdf). </p>
+
+        <b class="w3-wide w3-text-teal">ANNA LINDBERG TRÄNINGSLÄGER</b>
+        <p class="w3-justify">Anna Lindberg arangerar träningsläger var 23e - 25e november.</p>
+
+        <b class="w3-wide w3-text-teal">SK NEPTUN KM</b>
+        <p class="w3-justify">Neptuns Klubbmästerskap för Masters går av stapeln den 12e december 2019. </p>
+
+        <b class="w3-wide w3-text-teal">LALA SPORTS TRÄNINGSLÄGER</b>
+        <p class="w3-justify">Xsenija och Olga anordnar träningsläger med Dimitri Sautin 3e - 9e januari i Aachen i Tyskland. </p>
+
+</div>
+
+{% endblock content %}

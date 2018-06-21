@@ -1,0 +1,133 @@
+{% extends "base" %}
+
+    {% block content %}
+<style>
+    .error{
+    	display: none;
+    	margin-left: 10px;
+    }
+
+    .error_show{
+    	color: red;
+    	margin-left: 10px;
+    }
+</style>
+<script>
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+</script>
+<div class="w3-container w3-wide">
+
+    <button onclick="myFunction('add-training-div')" class="w3-text-teal w3-button w3-block w3-left-align w3-round">
+    Add training</button>
+    <div id="add-training-div" class="w3-hide">
+    <form id="addTrainingForm" class="w3-container" action="/get_add_training" method="post" accept-charset="utf-8">
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:150px"> <label class="w3-text-teal" >Date:</label></div>
+            <div class="w3-rest"> <input class="w3-input w3-rest" type="date" name="date" required> </div>
+        </div>
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:150px"> <label class="w3-text-teal" >Feeling:</label></div>
+            <div class="w3-rest">
+                <select class= "w3-select " name="feeling" required>
+                    <option value="0">None</option>
+                    <option value="1">Horrible</option>
+                    <option value="2">Bad</option>
+                    <option value="3">Ok</option>
+                    <option value="4">Good</option>
+                    <option value="5">Diving is fuuuun!</option>
+                </select>
+            </div>
+        </div>
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:150px"><label class="w3-text-teal" >Comment:</label></div>
+            <div class="w3-rest"><input class="w3-input w3-rest w3-border w3-light-grey w3-bar-item" type="text" name="comment">  </div>
+
+        </div>
+        <div class="w3-row w3-section">
+            <input class="w3-button w3-teal w3-col w3-round" type="submit" value="AddTraining" id="addTrainingBtn" >
+        </div>
+    </form>
+    </div>
+
+    <button onclick="myFunction('log-dives-div')" class="w3-text-teal w3-button w3-block w3-left-align">
+        Log dives</button>
+
+        <div id="log-dives-div" class="w3-hide">
+
+    <form class="w3-container" action="/get_log_training" method="post" accept-charset="utf-8">
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Training: </label> </div>
+            <div class="w3-rest"><select class= "w3-select " name="training_id" required>
+            {% for s in trainings %}
+
+               <option value="{{ s.0 }}" {% if s.0==selected_training %} selected=\"selected\" {% endif %}>{{ s.1 }}</option>
+                    {% endfor %}
+            </select></div>
+        </div>
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Dive:</label></div>
+            <div class="w3-rest"><input class= "w3-input w3-border w3-light-grey" type="text" name="dive" required> </div>
+            </div>
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Amount:</label></div>
+                <div class="w3-rest"><input class= "w3-input " type="number" name="number" required> </div>
+        </div>
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:120px"><label class="w3-text-teal w3-bar-item">Height:</label></div>
+                <div class="w3-rest">
+                    <select class= "w3-select" name="height">
+            <option value="1m">1m</option>
+            <option value="3m">3m</option>
+            <option value="1m Platform">1m Platform</option>
+            <option value="3m Platform">3m Platform</option>
+            <option value="5m Platform">5m Platform</option>
+            <option value="7m Platform">7.5m Platform</option>
+                        <option value="10m Platform">10m Platform</option>
+          </select></div>
+                <div class="w3-row w3-section">
+                            <div class="w3-col" style="width:150px"> <label class="w3-text-teal" >Feeling:</label></div>
+                            <div class="w3-rest">
+                                <select class= "w3-select " name="feeling" required>
+                                    <option value="0">None</option>
+                                    <option value="1" >Horrible</option>
+                                    <option value="2">Bad</option>
+                                    <option value="3">Ok</option>
+                                    <option value="4">Good</option>
+                                    <option value="5">Diving is fuuuun!</option>
+                                </select>
+                            </div>
+                        </div>
+                <div class="w3-row w3-section">
+                    <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Comment: </label></div>
+                    <div class="w3-rest"><input class= "w3-input w3-bar-item w3-border w3-light-grey" type="text" name="comment"></div>
+
+                </div>
+                <input class="w3-teal w3-button w3-round w3-col" type="submit" value="Add Dive To Training">
+            </div>
+    </form>
+            {% if successful_add %}
+            <label style="color:blue">{{ successful_add }}</label>
+            {% endif %}
+    </div>
+</div>
+{% if successful_add %}
+<script>
+myFunction('log-dives-div')
+</script>
+{% else %}
+<script> myFunction('add-training-div')    </script>
+{% endif %}
+{% endblock content %}
+
+
+
+
+

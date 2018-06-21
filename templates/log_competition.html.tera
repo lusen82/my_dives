@@ -1,0 +1,116 @@
+{% extends "base" %}
+
+    {% block content %}
+<script>
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+
+<button onclick="myFunction('add-competition-div')" class="w3-text-teal w3-button w3-block w3-left-align w3-round">
+    Add Competition</button>
+    <div id="add-competition-div" class="w3-hide">
+    <form class="w3-container" action="/get_add_competition" method="post" accept-charset="utf-8">
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:150px"> <label class="w3-text-teal" >Date:</label></div>
+            <div class="w3-rest"> <input class="w3-input w3-rest" type="date" name="date" required> </div>
+        </div>
+        <div class="w3-row w3-section">
+                   <div class="w3-col" style="width:150px"> <label class="w3-text-teal" >Name:</label></div>
+                   <div class="w3-rest"> <input class="w3-input w3-rest" type="text" name="competition_name" required> </div>
+               </div>
+        <div class="w3-row w3-section">
+                                   <div class="w3-col" style="width:150px"> <label class="w3-text-teal" >Feeling:</label></div>
+                                   <div class="w3-rest">
+                                       <select class= "w3-select " name="feeling" required>
+                                           <option value="0">None</option>
+                                           <option value="1" >Horrible</option>
+                                           <option value="2">Bad</option>
+                                           <option value="3">Ok</option>
+                                           <option value="4">Good</option>
+                                           <option value="5">Diving is fuuuun!</option>
+                                       </select>
+                                   </div>
+                               </div>
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:150px"><label class="w3-text-teal" >Comment:</label></div>
+            <div class="w3-rest"><input class="w3-input w3-rest w3-border w3-light-grey w3-bar-item" type="text" name="comment">  </div>
+        </div>
+        <div class="w3-row w3-section">
+            <input class="w3-button w3-teal w3-col w3-round" type="submit" value="Add Competition">
+        </div>
+    </form>
+    </div>
+
+
+<button onclick="myFunction('log-dives-div')" class="w3-text-teal w3-button w3-block w3-left-align">
+    Log dives</button>
+    <div id="log-dives-div" class="w3-hide">
+
+<form class="w3-container" action="/get_log_competition" method="post" accept-charset="utf-8">
+    <div class="w3-row w3-section">
+        <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Compeition: </label> </div>
+        <div class="w3-rest"><select class= "w3-select " name="competition_id" required>
+        {% for s in competitions %}
+
+           <option value="{{ s.0 }}" {% if s.0==selected_competition %} selected=\"selected\" {% endif %}>{{ s.1 }} " : " {{ s.2 }}</option>
+                {% endfor %}
+        </select></div>
+    </div>
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Dive:</label></div>
+        <div class="w3-rest"><input class= "w3-input w3-border w3-light-grey" type="text" name="dive" required> </div>
+        </div>
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Score:</label></div>
+            <div class="w3-rest"><input class= "w3-input " type="number" step="0.01" name="score" required> </div>
+    </div>
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:120px"><label class="w3-text-teal w3-bar-item">Height:</label></div>
+            <div class="w3-rest">
+                <select class= "w3-select" name="height">
+        <option value="1m">1m</option>
+        <option value="3m">3m</option>
+        <option value="5m Platform">5m Plattform</option>
+                    <option value="7m Platform">7.5m Plattform</option>
+                    <option value="10m Platform">10m Plattform</option>
+      </select></div>
+            <div class="w3-row w3-section">
+                                       <div class="w3-col" style="width:150px"> <label class="w3-text-teal" >Feeling:</label></div>
+                                       <div class="w3-rest">
+                                           <select class= "w3-select " name="feeling" required>
+                                               <option value="0">None</option>
+                                               <option value="1" >Horrible</option>
+                                               <option value="2">Bad</option>
+                                               <option value="3">Ok</option>
+                                               <option value="4">Good</option>
+                                               <option value="5">Diving is fuuuun!</option>
+                                           </select>
+                                       </div>
+                                   </div>
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:120px"><label class="w3-text-teal ">Comment: </label></div>
+                <div class="w3-rest"><input class= "w3-input w3-bar-item w3-border w3-light-grey" type="text" name="comment"></div>
+            </div>
+            <input class="w3-teal w3-button w3-round w3-col" type="submit" value="Add Dive To Competition">
+        </div>
+    {% if successful_add %}
+    <label style="color:blue">{{ successful_add }}</label>
+    {% endif %}
+</form>
+</div>
+
+
+
+{% if successful_add %}
+<script>
+myFunction('log-dives-div')</script>
+{% else %}
+<script> myFunction('add-competition-div')    </script>
+{% endif %}
+{% endblock content %}

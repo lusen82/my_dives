@@ -1,0 +1,97 @@
+{% extends "base" %}
+
+{% block content %}
+
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
+
+<div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+    <div class="w3-quarter w3-container">
+        <table class="w3-table-all">
+            <tr><th>Height and dive:</th></tr>
+            <tr><td><button onclick="expandSection('one-meter')">1 meter</button> </td></tr>
+            <td id="one-meter" class="w3-hide">
+                {% for s in dives %}
+                {% if s.2  == "1m" %}
+
+                <form id="my_form1" action="/present_selected_dive" method="post" accept-charset="utf-8">
+                    <button  {% if s.0 == selected_dive %} class="w3-button w3-white w3-border w3-border-blue" {% else %} class="w3-button w3-white w3-border" {% endif %} name="id" value=" {{ s.0 }} ">{{ s.1 }}</button>
+                </form>
+                {% endif %}
+                {% endfor %}
+            </td>
+            <tr><td><button onclick="expandSection('three-meter')">3 meter</button>   </td></tr>
+            <td id="three-meter" class="w3-hide">
+                {% for s in dives %}
+                {% if s.2 == "3m" %}
+                <form id="my_form2" action="/present_selected_dive" method="post" accept-charset="utf-8">
+                    <button  {% if s.0 == selected_dive %} class="w3-button w3-white w3-border w3-border-blue" {% else %} class="w3-button w3-white w3-border" {% endif %} name="id" value=" {{ s.0 }} ">{{ s.1 }}</button>
+                </form>
+                {% endif %}
+                {% endfor %}
+            </td>
+            <tr><td><button onclick="expandSection('platform')">Platform</button>  </td></tr>
+            <td id="platform" class="w3-hide">
+                {% for s in dives %}
+                {% if s.2 == "5m Platform" %}
+                <form id="my_form3" action="/present_selected_dive" method="post" accept-charset="utf-8">
+                    <button  {% if s.0 == selected_dive %} class="w3-button w3-white w3-border w3-border-blue" {% else %} class="w3-button w3-white w3-border" {% endif %} name="id" value=" {{ s.0 }} ">{{ s.1 }}</button>
+                </form>
+                {% endif %}
+                {% endfor %}
+                </td>
+            </table>
+    </div>
+<div class="w3-threequarter w3-container">
+    {% if selected_dive %}
+    <canvas id="myChart" width="200" height="100"></canvas>
+    {% endif %}
+</div>
+</div>
+
+
+<script>
+
+        var c = document.getElementById('myChart');
+        var ds = {{ statistics_for_dive }};
+        var tt = {{ times_for_training }};
+       drawDiveGraph(c, ds, tt);
+       expandOnLoadIfSelected();
+    function expandSection(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+     function expandOnLoadIfSelected() {
+        {% if selected_dive %}
+        {% for n in dives %}
+
+        {% if n.0 == selected_dive %}
+             {% if n.2 == "1m" %}
+
+                 expandSection('one-meter');
+        {% endif %}
+         {% if n.2 == "3m" %}
+
+                                expandSection('three-meter');
+        {% endif %}
+         {% if n.2 == "5m Platform" %}
+
+              expandSection('platform');
+        {% endif %}
+        {% endif %}
+
+        {% endfor %}
+
+        {% endif %}
+
+
+        }
+
+    </script>
+
+{% endblock content %}
+

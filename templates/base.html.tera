@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script type="text/javascript" src="../static/chart_set_up.js"></script>
+      <script>
+      function toggle_nav(id) {
+          var x = document.getElementById(id);
+          if (x.className.indexOf("w3-show") == -1) {
+              x.className += " w3-show";
+          } else {
+              x.className = x.className.replace(" w3-show", "");
+          }
+      }
+  </script>
+    <title>Diving Logger</title>
+  </head>
+  <div class="w3-bar w3-hide-small">
+      <a href="../" class="w3-bar-item w3-button w3-padding-large">START</a>
+      <a href="/trainings" class="w3-bar-item w3-button w3-padding-large">TRAININGS</a>
+      <a href="/get_stats_overview" class="w3-bar-item w3-button w3-padding-large">MY DIVING</a>
+      <a href="/statistics/get_dives" class="w3-bar-item w3-button w3-padding-large">DIVES</a>
+      <a href="/competitions" class="w3-bar-item w3-button w3-padding-large">COMPETITIONS</a>
+      <a href="/competition_dives" class="w3-bar-item w3-button w3-padding-large">COMPETITION DIVES</a>
+      <a href="/get_log_training_form" class="w3-bar-item w3-button w3-padding-large">LOG TRAINING</a>
+      <a href="/get_log_competition_form" class="w3-bar-item w3-button w3-padding-large">LOG COMPETITION</a>
+      <div>{% if name %}
+          <b class="w3-bar-item w3-text-teal"> {{ name }} </b>
+          {% else %}
+        <a href="/login_page" class="w3-bar-item w3-button w3-padding-large w3-teal">Log in</a>
+          {% endif %}</div>
+  </div>
+
+  <div class="w3-row w3-hide-medium w3-hide-large">
+      <button onclick="toggle_nav('navigation_down')" class="w3-text-teal w3-button w3-block w3-left-align w3-round">
+          Select ..</button>
+      <div id="navigation_down" class="w3-hide">
+          <a href="../" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">START</a>
+      <a href="/trainings" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">MY TRAININGS</a>
+      <a href="/get_stats_overview" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">MY DIVING</a>
+      <a href="/statistics/get_dives" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">MY DIVES</a>
+      <a href="/competitions" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">MY COMPETITIONS</a>
+      <a href="/competition_dives" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">MY COMPETITION DIVES</a>
+      <a href="/get_log_training_form" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">LOG TRAINING</a>
+      <a href="/get_log_competition_form" class="w3-col w3-button w3-padding-large" onclick="toggle_nav('navigation_down')">LOG COMPETITION</a>
+      <b>{% if name %}
+          Logged in as {{ name }}
+          {% else %}
+        <a href="/login_page" class="w3-right-align w3-teal">Log in</a>
+          {% endif %}</b>
+      </div>
+  </div>
+
+
+  <br />
+  <body>
+  <div class="w3-container w3-rest">
+    {% if not name %}
+    <META http-equiv ="refresh" content="0 URL=/login_page">
+    {% else%}
+    {% block content %}{% endblock content %}
+    {% endif %}
+  </div>
+  </body>
+</html>
+
+
+

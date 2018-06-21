@@ -1,0 +1,75 @@
+PLATFORM ONE METER THREE METER
+STR PIKE TUCK FREE STR PIKE TUCK FREE
+Forward Group A B C D A B C D
+100 Front Jump 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+10 Front Fall 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+101 Forward Dive 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+102 Forward Somersault 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+103 Forward 1½ Somersaults 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+104 Forward 2 Somersaults - - 1.0 - - 1.0 1.0 -
+105 Forward 2½ Somersaults - - - - - 1.0 1.0 -
+Back Group A B C D A B C D
+200 Back Jump 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+20 Back Fall 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+201 Back Dive 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+202 Back Somersault 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+203 Back 1½ Somersaults 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+204 Back 2 Somersaults - 1.0 1.0 - 1.0 1.0 1.0 -
+Reverse Group A B C D A B C D
+301 Reverse Dive 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+302 Reverse Somersault 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+303 Reverse 1½ Somersaults 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+304 Reverse 2 Somersaults 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+Inward Group A B C D A B C D
+401 Inward Dive 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+402 Inward Somersault 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+403 Inward 1½ Somersaults - 1.0 1.0 - - 1.0 1.0 -
+404 Inward 2 Somersaults - 1.0 1.0 - - 1.0 1.0 -
+Front Twisting Group A B C D A B C D
+5111 Forward Dive ½ Twist 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+5112 Forward Dive 1 Twist 1.0 1.0 - - 1.0 1.0 - -
+5121 Forward Somersault ½ Twist - - - 1.0 - - - 1.0
+5122 Forward Somersault 1 Twist - - - 1.0 - - - 1.0
+5124 Forward Somersault 2 Twists - - - 1.0 - - - 1.0
+5126 Forward Somersault 3 Twists - - - 1.0 - - - 1.0
+5131 Forward 1½ Somersaults ½ Twist - - - - - - - 1.0
+5132 Forward 1½ Somersaults 1 Twist - - - - - - - 1.0
+5134 Forward 1½ Somersaults 2 Twists - - - - - - - 1.0
+Back Twisting Group A B C D A B C D
+5211 Back Dive ½ Twist 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+5212 Back Dive 1 Twist 1.0 - - - 1.0 - - -
+5221 Back Somersault ½ Twist - - - 1.0 - - - 1.0
+5222 Back Somersault 1 Twist - - - 1.0 - - - 1.0
+5223 Back Somersault 1½ Twists - - - 1.0 - - - 1.0
+5225 Back Somersault 2½ Twists - - - 1.0 - - - 1.0
+5231 Back 1½ Somersaults ½ Twist - - - 1.0 - - - 1.0
+5233 Back 1½ Somersaults 1½ Twists - - - - - - - 1.0
+5235 Back 1½ Somersaults 2½ Twists - - - - - - - 1.0
+Reverse Twisting Group A B C D A B C D
+5311 Reverse Dive ½ Twist 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+5312 Reverse Dive 1 Twist 1.0 - - - 1.0 - - -
+5321 Reverse Somersault ½ Twist - - - 1.0 - - - 1.0
+5322 Reverse Somersault 1Twist - - - 1.0 - - - 1.0
+5323 Reverse Somersault 1½ Twists - - - 1.0 - - - 1.0
+5325 Reverse Somersault 2½ Twists - - - 1.0 - - - 1.0
+5331 Reverse 1½ Somersaults ½ Twist - - - - - - - 1.0
+5333 Reverse 1½ Somersaults 1½ - - - - - - - 1.0
+5335 Reverse 1½ Somersaults 2½ - - - - - - - 1.0
+Inward Twisting Group A B C D A B C D
+5411 Inward Dive ½ Twist 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+5412 Inward Dive 1 Twist 1.0 1.0 1.0 - 1.0 1.0 1.0 -
+5421 Inward Somersault ½ Twist - - - - - - - 1.0
+5422 Inward Somersault 1 Twist - - - - - - - 1.0
+5432 Inward 1½ Somersaults 1 Twist - - - 1.0 - - - 1.0
+PLATFORM	1 METERS	3 METERS
+ARMSTAND GROUP	A	B	C	D	A	B	C	D
+600	Armstand Dive	1.0	- - - 1.0 - - -
+611	Armstand Forward ½ Somersault	1.0	- - - 1.0 - - -
+612	Armstand Forward Somersault	1.0	1.0	1.0	 	1.0	1.0	1.0
+614	Armstand Forward Double Somersault	 - - - - - 1.0	1.0 -
+621	Armstand Backward ½ Somersault	1.0	1.0	1.0 - 1.0 1.0 1.0 -
+622	Armstand Backward 1 Somersault	1.0	1.0	1.0 - 1.0 1.0 1.0 -
+623	Armstand Backward 1 ½ Somersault    1.0	1.0 1.0 - 1.0 1.0 1.0 -
+624	Armstand Backward Double Somersault	- - - - - 1.0 1.0 -
+631	Armstand Reverse ½ Somersault	1.0	1.0	1.0 -	1.0	1.0	1.0	-
+632	Armstand Reverse 1 Somersault	 - - - - 	 1.0 1.0 1.0 -
