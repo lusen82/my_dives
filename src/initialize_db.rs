@@ -9,28 +9,17 @@ use std::io::BufReader;
 use std::fs::File;
 use std::io::BufRead;
 use std::iter;
-use models::NewDive;
-use utils::CliError;
-use models::LoggedInUser;
-use models::NewLoggedInUser;
-
-
-
-use diesel::insert_into;
-use models::Training;
-use models::NewTraining;
-use models::Diver;
-use models::NewDiver;
-use models::Competition;
-use models::DiversDives;
-use models::Dive;
-use models::DiversTrainings;
-use models::TrainingsDives;
-use models::CompetitionDive;
-use models::OldTraining;
-use models::OldCompetition;
-use models::OldTrainingsDives;
-use models::OldCompetitionDive;
+use crate::models::NewDive;
+use crate::utils::CliError;
+use crate::models::LoggedInUser;
+use crate::models::Diver;
+use crate::models::DiversDives;
+use crate::models::Dive;
+use crate::models::DiversTrainings;
+use crate::models::OldTraining;
+use crate::models::OldCompetition;
+use crate::models::OldTrainingsDives;
+use crate::models::OldCompetitionDive;
 
 pub fn create_dive_manually() -> Result<(), CliError> {
     let connection = super::establish_connection();
@@ -81,38 +70,38 @@ pub fn restore_database() -> Result<(), CliError> {
     let connection = super::establish_old_connection();
 
     println!("Find users.");
-    use schema::loggedinusers::dsl::*;
+    use crate::schema::loggedinusers::dsl::*;
     let logged_in_users: Vec<LoggedInUser> = loggedinusers.load::<LoggedInUser>(&connection)?;
 
 
-    use schema::divers::dsl::*;
+    use crate::schema::divers::dsl::*;
     let divers_res: Vec<Diver> = divers.load::<Diver>(&connection)?;
     println!("Found {} divers.", &divers_res.len());
 
 
-    use old_schema::trainings::dsl::*;
+    use crate::old_schema::trainings::dsl::*;
     let trainings_res: Vec<OldTraining> = trainings.load::<OldTraining>(&connection)?;
     println!("Found {} trainings.", &trainings_res.len());
 
 
-    use old_schema::competitions::dsl::*;
+    use crate::old_schema::competitions::dsl::*;
     let competitions_res: Vec<OldCompetition> = competitions.load::<OldCompetition>(&connection)?;
     println!("Found {} competitions.", &competitions_res.len());
 
-    use schema::dives::dsl::*;
+    use crate::schema::dives::dsl::*;
     let dives_res: Vec<Dive> = dives.load::<Dive>(&connection)?;
     println!("Found {} dives.", dives_res.len());
 
-    use schema::diversdives::dsl::*;
+    use crate::schema::diversdives::dsl::*;
     let divers_dives_res: Vec<DiversDives> = diversdives.load::<DiversDives>(&connection)?;
 
-    use schema::diverstrainings::dsl::*;
+    use crate::schema::diverstrainings::dsl::*;
     let divers_trainings_res: Vec<DiversTrainings> = diverstrainings.load::<DiversTrainings>(&connection)?;
 
-    use old_schema::trainingsdives::dsl::*;
+    use crate::old_schema::trainingsdives::dsl::*;
     let trainings_dives_res: Vec<OldTrainingsDives> = trainingsdives.load::<OldTrainingsDives>(&connection)?;
 
-    use old_schema::competitiondives::dsl::*;
+    use crate::old_schema::competitiondives::dsl::*;
     let competition_dive_res: Vec<OldCompetitionDive> = competitiondives.load::<OldCompetitionDive>(&connection)?;
 
     println!("All data is taken from old db.");
@@ -124,11 +113,10 @@ pub fn restore_database() -> Result<(), CliError> {
     logged_in_users.into_iter().for_each(|f|
         {
             let d : LoggedInUser = f;
-            use schema::loggedinusers;
             use diesel::expression::sql_literal::sql;
             let insert_into_query = format!("INSERT INTO loggedinusers (id, log_in_name, password) VALUES ({}, '{}', '{}') on conflict (id) do nothing;",
                                             d.id, d.log_in_name, d.password);
-            let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+            let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
 
         });
     println!("Inserted users.");
@@ -138,7 +126,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
            let  insert_into_query = format!("INSERT INTO divers (id, logged_in_user_id, name, born, email) VALUES ({}, {}, '{}', {}, '{}') on conflict (id) do nothing;",
                                             d.id, d.logged_in_user_id, d.name, d.born, d.email);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
     println!("inserted divers.");
     trainings_res.into_iter().for_each(|f|
@@ -147,7 +135,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
            let  insert_into_query = format!("INSERT INTO trainings (id, diver_id, date_time, feeling, comment) VALUES ({}, {}, '{}', {}, '{}') on conflict (id) do nothing;",
                                             d.id, d.diver_id, d.date_time, 0, d.comment);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
     println!("Inserted trainings.");
     competitions_res.into_iter().for_each(|f|
@@ -156,7 +144,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
            let  insert_into_query = format!("INSERT INTO competitions  (id, diver_id, competition_name, date_time, feeling, comment) VALUES ({}, {}, '{}', '{}', {}, '{}') on conflict (id) do nothing;",
                                             d.id, d.diver_id, d.competition_name, d.date_time, 0, d.comment);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
     println!("Inserted competitions.");
     dives_res.into_iter().for_each(|f|
@@ -165,7 +153,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
            let  insert_into_query = format!("INSERT INTO dives  (id, dive_group, code, height, dd) VALUES ({}, {}, '{}', '{}', {}) on conflict (id) do nothing;",
                                             d.id, d.dive_group, d.code, d.height, d.dd);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
     println!("Inserted dives.");
     divers_dives_res.into_iter().for_each(|f|
@@ -174,7 +162,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
            let  insert_into_query = format!("INSERT INTO diversdives  (id, dive_id, diver_id) VALUES ({}, {}, {}) on conflict (id) do nothing;",
                                             d.id, d.dive_id, d.diver_id);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
 
     divers_trainings_res.into_iter().for_each(|f|
@@ -183,7 +171,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
            let  insert_into_query = format!("INSERT INTO diverstrainings (id, diver_id, training_id) VALUES ({}, {}, {}) on conflict (id) do nothing;",
                                             d.id, d.diver_id, d.training_id);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
 
     trainings_dives_res.into_iter().for_each(|f|
@@ -192,7 +180,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
            let  insert_into_query = format!("INSERT INTO trainingsdives (id, training_id, dive_id, nr_of_times, feeling, comment) VALUES ({}, {}, {}, {}, {}, '{}') on conflict (id) do nothing;",
                                             d.id, d.training_id, d.dive_id, d.nr_of_times, 0, d.comment);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
 
     competition_dive_res.into_iter().for_each(|f|
@@ -201,7 +189,7 @@ pub fn restore_database() -> Result<(), CliError> {
            use diesel::expression::sql_literal::sql;
                        let  insert_into_query = format!("INSERT INTO competitiondives (id, competition_id, dive_id, score, feeling, comment)  VALUES ({}, {}, {}, {}, {}, '{}') on conflict (id) do nothing;",
                                                         d.id, d.competition_id, d.dive_id, d.score, 0, d.comment);
-           let  res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
+           let  _res: QueryResult<i64> = sql(insert_into_query.as_str()).get_result(&connection);
        });
     println!("Inserted relations.");
     println!("Ready inserting, check result.");
@@ -257,7 +245,7 @@ fn fix_id_sequence_for_table(connection: &PgConnection, table: &str) {
     let fix_seq_query_for_table = format!("SELECT setval('{}', (SELECT MAX(id) FROM {})+1);",
                                           table_id_seq, table);
     use diesel::expression::sql_literal::sql;
-    let res: QueryResult<i64> = sql(fix_seq_query_for_table.as_str()).get_result(connection);
+    let _res: QueryResult<i64> = sql(fix_seq_query_for_table.as_str()).get_result(connection);
 }
 //pub fn dump_data_for_all_users() -> Result<(), CliError> {
 //    let connection = super::establish_connection();
@@ -267,7 +255,7 @@ fn fix_id_sequence_for_table(connection: &PgConnection, table: &str) {
 //}
 
 //fn get_users() -> Result<Vec<LoggedInUser>, CliError> {
-//    use schema::loggedinusers::dsl::*;
+//    use crate::schema::loggedinusers::dsl::*;
 //    let users: Vec<LoggedInUsers> = loggedinusers::table.load::<LoggedInUsers>(&connection)
 //        .expect("error loading users");
 //    Ok(users)
@@ -277,7 +265,7 @@ fn fix_id_sequence_for_table(connection: &PgConnection, table: &str) {
 fn create_dives_with_dd(all_lines: Vec<String>, styles: Vec<char>) -> Vec<DDive> {
     let mut ddives: Vec<DDive> = vec![];
     for line in all_lines {
-        let mut split1: Vec<&str> = line.split_whitespace().collect();
+        let split1: Vec<&str> = line.split_whitespace().collect();
 
         let mut split = split1.into_iter();
       //  println!("{:?}", &split);
@@ -373,14 +361,14 @@ fn create_dive<'a>(conn: &PgConnection, ccode: &'a str, hheight: &'a str, ddd: &
     if  ddd > &0.1 {
         let ddive_group: &i16 = &get_group_for_dive(ccode.as_ref());
 
-        use schema::dives;
+        use crate::schema::dives;
         let new_dive = NewDive {
             code: ccode,
             dive_group: ddive_group,
             height: hheight,
             dd: ddd
         };
-        use schema::dives::dsl::*;
+        use crate::schema::dives::dsl::*;
         let  existing_dive : Vec<Dive> = dives.filter(code.eq(ccode)).filter(dive_group.eq(ddive_group)).filter(height.eq(hheight)).load::<Dive>(conn)?;
 
         if existing_dive.is_empty() {

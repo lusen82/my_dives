@@ -1,0 +1,499 @@
+    1  git co -b bug/HT_OPT-7817-limited-parts-rule-should-work-for-copies-too
+    2  git ls
+    3  git log
+    4  git staging
+    5  git reset HEAD^ 
+    6  git stash
+    7  git stash apply
+    8  git ls
+    9  git rebase -i fc8c82f
+   10  git rebase -i fc8c82f
+   11  git ls
+   12  git log
+   13  git push origin bug/HT_OPT-7817-limited-parts-rule-should-work-for-copies-too:review/bug/HT_OPT-7817-filter-pm-in-limited-beam-search-rule
+   14  git push origin bug/HT_OPT-7817-limited-parts-rule-should-work-for-copies-too:review/bug/HT_OPT-7817-filter-pm-in-limited-beam-search-rule
+   15  git ls
+   16  git co -
+   17  git co bug/HT_OPT-7815-significantly-larger-tan-bug 
+   18  git ls
+   19  git ls
+   20  git rebase -i fc8c82f
+   21  git ls
+   22  git rebase -i fc8c82f
+   23  git ls
+   24  git log
+   25  git rebase -i fc8c82f
+   26  git commit --amend
+   27  git rebase --continue
+   28  git log
+   29  git co develop 
+   30  git rebase origin/develop
+   31  git co -
+   32  git rebase origin/develop
+   33  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   34  git rebase --exec "mvn clean compile" develop
+   35  git co develop
+   36  git ls
+   37  git get
+   38  git rebase origin/develop
+   39  git co -
+   40  git rebase origin/develop
+   41  git ls
+   42  git ls develop
+   43  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   44  git rebase --exec "mvn clean compile" develop
+   45  git co develop 
+   46  git merge --no-ff bug/HT_OPT-7815-significantly-larger-tan-bug 
+   47  git log
+   48  git ls
+   49  git get
+   50  git ls origin/develop
+   51  git ls
+   52  git push
+   53  git log
+   54  git branch -D bug/HT_OPT-7815-significantly-larger-tan-bug 
+   55  git push origin :review/bug/HT_OPT-7815-significantly-larger-than 
+   56  git co bug/HT_OPT-7817-limited-parts-rule-should-work-for-copies-too 
+   57  git rebase origin/develop
+   58  git ls
+   59  git rebase -i 52d0d2f
+   60  git ls
+   61  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   62  git rebase --exec "mvn clean compile" develop
+   63  git co develop
+   64  git get
+   65  git ls
+   66  git co -
+   67  git ls
+   68  git staging
+   69  git co develop
+   70  git ls
+   71  git rebase -i ‹
+   72  git rebase -i 52d0d2f
+   73  git ls
+   74  git log
+   75  git push
+   76  git get
+   77  git ls origin/develop
+   78  git co bug/HT_OPT-7817-limited-parts-rule-should-work-for-copies-too 
+   79  git ls
+   80  git rebase origin/develop
+   81  git ls
+   82  git co develop
+   83  git ls
+   84  git rebase origin/develop
+   85  git ls
+   86  git co -
+   87  git staging
+   88  git get
+   89  git ls
+   90  git co develop 
+   91  git ls
+   92  git merge --no-ff bug/HT_OPT-7817-limited-parts-rule-should-work-for-copies-too 
+   93  git ls
+   94  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   95  git ls
+   96  git push
+   97  git log
+   98  git staging
+   99  cd dump/tars
+  100  tar -xvf ~/Downloads/e1e83b98-bd0f-11e8-b589-0a580a000409.tar 
+  101  tar -xvf ~/Downloads/Weland-MP46BC.tar 
+  102  tar -xvf ~/Downloads/Weland-MP46B.tar 
+  103  tar -xvf ~/Downloads/SUP-1148.tar 
+  104  git stash
+  105  git co -b bug/HT_OPT-7820-significantly-larger
+  106  git stash apply
+  107  git ls
+  108  git staging
+  109  cd ..
+  110  cd ..
+  111  ./bin/selectFromNightly.py 
+  112  cd bin
+  113  ./selectFromNightly.py 
+  114  cd ..
+  115  cd dump/tars
+  116  tar -xvf ~/Downloads/Weland-MP68A.tar 
+  117  tar -xvf ~/Downloads/Weland-MP25.tar 
+  118  cd ..
+  119  cd ..
+  120  git staging
+  121  git stash
+  122  git get
+  123  git co -b feature/z-7250 origin/review/feature/z-opt-7250-piling-in-multi-source-clustering-beam-search 
+  124  git co -
+  125  git ls
+  126  git rebase -i 6bbb162
+  127  git rebase -i 6bbb162
+  128  git ls
+  129  git push origin bug/HT_OPT-7820-significantly-larger:review/bug/HT_OPT-7820-must be significantly-larger-to-be-invalid 
+  130  git push origin bug/HT_OPT-7820-significantly-larger:review/bug/HT_OPT-7820-must-be-much-larger-to-be-invalid 
+  131  git staging
+  132  git co -
+  133  git co -
+  134  git ls
+  135  git staging
+  136  cd dump/tars
+  137  tar -xvf ~/Downloads/bd6d0a4c-bb10-11e8-9de0-0a580a00001a.tar 
+  138  git reset HEAD^
+  139  git stash
+  140  git ls
+  141  git get
+  142  git rebase origin/develop
+  143  git log
+  144  git ls
+  145  git rebase -i e47eede
+  146  git log
+  147  git co develop 
+  148  git rebase origin/develop
+  149  git ls
+  150  cd ..
+  151  cd ..
+  152  git co -
+  153  git ls
+  154  git co -
+  155  git co -
+  156  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+  157  git co develop
+  158  git merge --no-ff bug/HT_OPT-7820-significantly-larger 
+  159  git ls
+  160  git log
+  161  git get
+  162  git ls 
+  163  git ls origin/develop
+  164  git push
+  165  git log
+  166  git branch -D bug/HT_OPT-7820-significantly-larger 
+  167  git branch -D bug/HT_OPT-7817-limited-parts-rule-should-work-for-copies-too 
+  168  git push origin :review/bug/HT_OPT-7817-filter-pm-in-limited-beam-search-rule 
+  169  git push origin :review/bug/HT_OPT-7820-must-be-much-larger-to-be-invalid 
+  170  git stash apply
+  171  git stash
+  172  git ls
+  173  git ls
+  174  git get
+  175  git rebase origin/develop
+  176  git ls
+  177  git log
+  178  git push
+  179  git ls
+  180  git ls origin/develop
+  181  git ls
+  182  git stash apply
+  183  git stash
+  184  git stash apply
+  185  git stash
+  186  branch
+  187  git branch
+  188  git co -b feature/HT_OPT-7816-use-multifillcontext-in-limited-beam-search-rule
+  189  git stash apply
+  190  git staging
+  191  git get
+  192  git ls origin/develoå
+  193  git ls origin/develop
+  194  git reset HEAD^
+  195  git ls
+  196  git staging
+  197  cd dump/tars
+  198  tar -xvf ~/Downloads/82be552a-bd83-11e8-aaa3-0a580a00050a.tar 
+  199  tar -xvf ~/Downloads/22f51ba0-bdb6-11e8-9734-0a580a000316.tar 
+  200  git get
+  201  cd ..
+  202  cd ..
+  203  git log
+  204  git push origin feature/HT_OPT-7816-use-multifillcontext-in-limited-beam-search-rule:review/feature/HT_OPT-7816-use-multi-fill-context-in-limited-parts-beamsearch-rule
+  205  git ls origin/review/feature/bh_OPT-7768-NoPlacementAbove 
+  206  git ls
+  207  git ls
+  208  git staging
+  209  git co feature/HT_OPT-7750-complement-fill-rule 
+  210  git stash
+  211  git co feature/HT_OPT-7750-complement-fill-rule 
+  212  git rebase origin/develop
+  213  git rebase --continue
+  214  git rebase --continue
+  215  git ls origin/review/feature/bh_OPT-7768-NoPlacementAbove 
+  216  git co develop
+  217  git co -b feature/HT_OPT-7750-only-complement-rule
+  218  git ls feature/HT_OPT-7750-complement-fill-rule 
+  219  git cherry-pick 18459da
+  220  git cherry-pick 1b946c9
+  221  git cherry-pick 1bfc9a6
+  222  git get
+  223  git co -b review/feature/jw_OPT-7706_beamInitializer_rectangleClusters origin/review/feature/jw_OPT-7706_beamInitializer_rectangleClusters 
+  224  git stash
+  225  git co -b review/feature/jw_OPT-7706_beamInitializer_rectangleClusters origin/review/feature/jw_OPT-7706_beamInitializer_rectangleClusters 
+  226  cd dump/tars
+  227  tar -xvf ~/Downloads/80d6f65a-cc91-11e8-968b-0a580a000445.tar 
+  228  git co -
+  229  git stash apply
+  230  git ls
+  231  git ls
+  232  git staging
+  233  git staging
+  234  git ls
+  235  git co feature/HT_OPT-7816-use-multifillcontext-in-limited-beam-search-rule 
+  236  git stash
+  237  git co feature/HT_OPT-7816-use-multifillcontext-in-limited-beam-search-rule 
+  238  git ls
+  239  git rebase origin/develop
+  240  git co develop
+  241  git rebase origin/develop
+  242  git co -
+  243  git ls
+  244  git log
+  245  git co develop
+  246  git get
+  247  git rebase origin/develop
+  248  git co -
+  249  git rebase origin/develop
+  250  git co -
+  251  git merge --no-ff feature/HT_OPT-7816-use-multifillcontext-in-limited-beam-search-rule 
+  252  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+  253  cd ..
+  254  cd ..
+  255  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+  256  git log
+  257  git ls
+  258  git push
+  259  git log
+  260  git branch -D feature/HT_OPT-7816-use-multifillcontext-in-limited-beam-search-rule 
+  261  git push origin :review/feature/HT_OPT-7816-use-multi-fill-context-in-limited-parts-beamsearch-rule 
+  262  git co feature/HT_OPT-7750-only-complement-rule 
+  263  cd dump/tars
+  264  tar -xvf ~/Downloads/395a656e-be2c-11e8-90d8-0a580a00031c.tar 
+  265  tar -xvf ~/Downloads/372ffd0c-bbda-11e8-af50-0a580a00030e.tar 
+  266  cd ..
+  267  cd ..
+  268  git staging
+  269  git ls
+  270  git staging
+  271  cd dump/tars
+  272  tar -xvf ~/Downloads/073c7738-bd10-11e8-b589-0a580a000409.tar 
+  273  tar -xvf ~/Downloads/38000ac0-be2c-11e8-90d8-0a580a00031c.tar 
+  274  tar -xvf ~/Downloads/52ba8950-c019-11e8-80bf-0a580a00010e.tar 
+  275  cd ..
+  276  cd ..
+  277  git staging
+  278  git staging
+  279  git ls
+  280  git staging
+  281  git get
+  282  git branch
+  283  git co review/feature/jw_OPT-7706_beamInitializer_rectangleClusters 
+  284  git co review/feature/jw_OPT-7706_beamInitializer_rectangleClusters 
+  285  git branch -r
+  286  git rebase origin/review/feature/jw_OPT-7706_beamInitializer_rectangleClusters 
+  287  git ls
+  288  git rebase --exec "mvn clean compile" 1ebf9ef
+  289  git rebase --abort
+  290  git ls
+  291  git co -
+  292  git staging
+  293  git stash
+  294  git get
+  295  git rebase origin/develop
+  296  git ls
+  297  git rebase --continue
+  298  git rebase --continue
+  299  git rebase --continue
+  300  git rebase --abort
+  301  git rebase origin/develop
+  302  git rebase --continue
+  303  git rebase --continue
+  304  git stash apply
+  305  git staging
+  306  cd dump/tars
+  307  tar -xvf ~/Downloads/36fcecf8-bd1c-11e8-9844-0a580a00040c.tar 
+  308  git get
+  309  cd ..
+  310  cd ..
+  311  git co -b origin/review/feature/bh_OPT-7834-FixBrokenTestsInPolygonClipping feature/bh_OPT-7834
+  312  git co -b review/feature/bh_OPT-7834-FixBrokenTestsInPolygonClipping origin/review/feature/bh_OPT-7834-FixBrokenTestsInPolygonClipping 
+  313  git co -
+  314  git staging
+  315  git staging
+  316  cd dump/tars
+  317  tar -xvf ~/Downloads/36aca3c4-bd1c-11e8-9844-0a580a00040c.tar 
+  318  cd ..
+  319  cd ..
+  320  git staging
+  321  git ls
+  322  git staging
+  323  cd dump/tars
+  324  tar -xvf ~/Downloads/e3f0638e-bd0f-11e8-b589-0a580a000409.tar 
+  325  git staging
+  326  git ls
+  327  tar -xvf ~/Downloads/872ded70-bdb3-11e8-b6f3-0a580a00003e.tar 
+  328  tar -xvf ~/Downloads/408d4120-be3c-11e8-9bd9-0a580a000521.tar 
+  329  tar -xvf ~/Downloads/806d12ec-bdb1-11e8-9bbd-0a580a00003c.tar 
+  330  tar -xvf ~/Downloads/d4751caa-be37-11e8-9c74-0a580a00051e.tar 
+  331  git ls
+  332  git get
+  333  git ls origin/develop
+  334  git rebase origin/develop
+  335  git stash
+  336  git rebase origin/develop
+  337  git stash apply
+  338  git staging
+  339  tar -xvf ~/Downloads/9e0b53c4-befe-11e8-869d-0a580a000326.tar 
+  340  git staging
+  341  tar -xvf ~/Downloads/d9bc6dec-bdbc-11e8-92dc-0a580a000517.tar 
+  342  tar -xvf ~/Downloads/7d4a005c-bdb1-11e8-9bbd-0a580a00003c.tar 
+  343  git staging
+  344  tar -xvf ~/Downloads/e88e4870-bd0f-11e8-b589-0a580a000409.tar 
+  345  cd ..
+  346  cd ..
+  347  git co develop
+  348  git co -b feature/HT_OPT-7750-add-complementary-fill-rule
+  349  git rebase origin/develop
+  350  git stash
+  351  git rebase origin/develop
+  352  git stash apply
+  353  git staging
+  354  cd dump/tars
+  355  tar -xvf ~/Downloads/87d99744-be29-11e8-aef1-0a580a00031b.tar 
+  356  tar -xvf ~/Downloads/60c195a4-c012-11e8-bf15-0a580a00010d.tar 
+  357  git rebase origin/develop
+  358  cd ..
+  359  cd ..
+  360  git co develop
+  361  git rebase origin/develop
+  362  git get
+  363  git rebase origin/develop
+  364  git co -
+  365  git rebase origin/develop
+  366  git co develop
+  367  git staging
+  368  git co -
+  369  git staging
+  370  git ls origin/develop
+  371  git ls develop
+  372  git ls
+  373  git ls
+  374  git rebase -i 156e8fc
+  375  git ls
+  376  git staging
+  377  git staging
+  378  git staging
+  379  git ls
+  380  git staging
+  381  git ls
+  382  git log
+  383  git ls
+  384  git rebase -i 156e8fc
+  385  git log
+  386  git rebase -i 156e8fc
+  387  git commit --amend
+  388  git rebase --continue
+  389  git log
+  390  git rebase -i 156e8fc
+  391  git ls
+  392  git push origin feature/HT_OPT-7750-add-complementary-fill-rule:review/feature/HT_OPT-7750-add-complementary-fill-rule
+  393  git co develop
+  394  git get
+  395  git rebase origin/develop
+  396  git co -b bug/HT_OPT-7848-limited-parts-beam-search-rule
+  397  git cherry-pick 49d1c8e
+  398  git cherry-pick 4a3c4ab
+  399  git cherry-pick 55558dd
+  400  git cherry-pick 2c20101
+  401  git stash
+  402  git ls
+  403  git co feature/HT_OPT-7750-add-complementary-fill-rule 
+  404  git cherry-pick 9f18564
+  405  git ls
+  406  git push origin feature/HT_OPT-7750-add-complementary-fill-rule:review/feature/HT_OPT-7750-add-complementary-fill-rule
+  407  git co -
+  408  git stash apply
+  409  git stash
+  410  git stash apply
+  411  git ls
+  412  git staging
+  413  cd dump/tars
+  414  tar -xvf ~/Downloads/e1fda546-bd0f-11e8-b589-0a580a000409.tar 
+  415  tar -xvf ~/Downloads/823d19c8-bdb1-11e8-9bbd-0a580a00003c.tar 
+  416  tar -xvf ~/Downloads/7d6c2772-bdb1-11e8-9bbd-0a580a00003c.tar 
+  417  git staging
+  418  git stash
+  419  git co -
+  420  cd ..
+  421  cd ..
+  422  postgres -D /usr/local/var/postgres
+  423  postgres -D /usr/local/var/postgres
+  424  cd PlusOne/my_dives/
+  425  diesel setup
+  426  postgres -D /usr/local/var/postgres
+  427  cd /usr/local/var/postgres/
+  428  psql diving5
+  429  pg_dump diving5 > lusentestdbdumpe.txt
+  430  ls -la
+  431  pg_dump diving6 > lusentestdbdumpe.txt
+  432  pg_dump diving5 > lusentestdbdumpe.txt
+  433  pg_dump --data-only diving5 > lusentestdbdumpe.txt
+  434  pg_restore diving6 --exit-on-error lusentestdbdumpe.txt 
+  435  pg_restore -d diving6 --exit-on-error lusentestdbdumpe.txt 
+  436  pg_dump --data-only diving5 > lusentestdbdumpe.dump
+  437  pg_restore -d diving6 --exit-on-error lusentestdbdumpe.dump
+  438  pg_restore -d diving6 lusentestdbdumpe.dump
+  439  pg_restore -d diving6 < lusentestdbdumpe.dump
+  440  pg_dump --data-only diving5 > lusentestdbdumpe.sql
+  441  psql -d diving6 -1 -f lusentestdbdumpe.sql
+  442  psql diving
+  443  psql diving6
+  444  psql diving7
+  445  psql postgres
+  446  ssh root@104.248.162.41
+  447  cd ~
+  448  ssh root@104.248.162.41
+  449  ssh lusen@104.248.162.41
+  450  ssh lusen@104.248.162.41
+  451  ssh lusen@104.248.162.41
+  452  cd PlusOne/
+  453  cd my_dives/
+  454  rustup update
+  455  rustup component add clippy-preview
+  456  cargo clippy
+  457  cargo build
+  458  rustup update
+  459  rustup update
+  460  rustup update
+  461  rustup update
+  462  rustc --version
+  463  ssh lusen@104.248.162.41
+  464  ssh lusen@104.248.162.41
+  465  5134D3m!
+  466  ssh lusen@104.248.162.41
+  467  ssh lusen@104.248.162.41
+  468  ssh lusen@104.248.162.41
+  469  ssh lusen@104.248.162.41
+  470  ssh lusen@104.248.162.41
+  471  ssh lusen@104.248.162.41
+  472  ssh lusen@104.248.162.41
+  473  ssh lusen@104.248.162.41
+  474  ssh lusen@104.248.162.41
+  475  ssh lusen@104.248.162.41
+  476  ssh lusen@104.248.162.41
+  477  ssh lusen@104.248.162.41
+  478  ssh lusen@104.248.162.41
+  479  ssh lusen@104.248.162.41
+  480  ssh lusen@104.248.162.41
+  481  ssh lusen@104.248.162.41
+  482  ssh lusen@104.248.162.41
+  483  ssh lusen@104.248.162.41
+  484  scp /Users/lusen/Desktop/letsencrypt lusen@104.248.162.41 /etc/letsencrypt
+  485  scp /Users/lusen/Desktop/letsencrypt lusen@104.248.162.41:/etc/letsencrypt
+  486  scp /Users/lusen/Desktop/letsencrypt root@104.248.162.41:/etc/letsencrypt
+  487  scp -r /Users/lusen/Desktop/letsencrypt root@104.248.162.41:/etc/letsencrypt
+  488  ls
+  489  ssh root@104.248.162.41
+  490  cd PlusOne/my_dives/
+  491  diesel setup
+  492  diesel setup
+  493  diesel print-schema 
+  494  diesel print-schema > schema.rs
+  495  diesel setup
+  496  psql
+  497  psql postgres
+  498  psql diving6
+  499  history > diesel1.txt

@@ -11,12 +11,13 @@
                     {% for s in trainings %}
                         <tr><td>
                             <form id="my_form" action="/present_selected_training" method="post" accept-charset="utf-8">
-                            <button {% if s.0 == selected_training %}
+                            <button name="id" value=" {{ s.0 }} "
+
+                                    {% if  s.0 == selected_training %}
                                     class="w3-button w3-white w3-border w3-border-blue"
                                     {% else %}
                                     class="w3-button w3-grey w3-border"
-                                    {% endif %}
-                                    name="id" value=" {{ s.0 }} ">{{ s.1 }}</button>
+                                    {% endif %}  >{{ s.1 }}</button>
 
                             </form></td>
                        </tr>
@@ -30,10 +31,18 @@
                 <th>Height and dive:</th>
 
                     {% for s in dives_for_training %}
+
+                <tr><td > {{ s.0 }} </td></tr>
+
                         <tr><td style="color:{%if s.1 == 1 %}red{% elif s.1 == 2 %} orange{% elif s.1 == 3 %} yellow {% elif s.1 == 4 %} lightgreen {% elif s.1 == 5 %}green  {% else %} black{% endif %} ;"> {{ s.0 }} </td></tr>
-                    {% endfor %}
-                {% endif %}
+
+                {% endfor %}
             </table>
+            <form id="my_form_2" action="/delete_training" method="post" accept-charset="utf-8">
+
+            <button name="id" class="w3-button w3-white w3-border w3-border-blue" id="delete_training" value=" {{ selected_training }} ">Delete training</button>
+            </form>
+            {% endif %}
       </div>
 </div>
 

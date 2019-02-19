@@ -1,0 +1,500 @@
+   23  git rebase -i 44cdf0e 
+   24  git ls
+   25  git log
+   26  git push origin feature/HT_OPT-4496-bug-in-WeightedRandomSelectionPopulation:review/bug/HT_OPT-4496-weighted-random-position-selection
+   27  git push origin feature/HT_OPT-4496-bug-in-WeightedRandomSelectionPopulation:review/bug/HT_OPT-4496-weighted-random-position-selection
+   28  git push origin :review/feature/HT_OPT-4496-weighted-random-position-selector
+   29  giT BRANCH -R
+   30  git branch -r
+   31  git push origin :review/bug/HT_OPT-4496-weighted-random-position-selector
+   32  git push origin :review/bug/HT_OPT-4496-weighted-random-position-selector
+   33  git push origin feature/HT_OPT-4496-bug-in-WeightedRandomSelectionPopulation:review/bug/HT_OPT-4496-weighted-random-position-selection
+   34  git ls
+   35  git push origin feature/HT_OPT-4496-bug-in-WeightedRandomSelectionPopulation:review/bug/HT_OPT-4496-weighted-random-position-selection
+   36  git ls
+   37  git get
+   38  git get
+   39  git stash
+   40  git rebase origin/develop
+   41  git ls
+   42  git staging
+   43  git co develop
+   44  git rebase origin/develop
+   45  git co -b feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative
+   46  git stash apply
+   47  git co feature/HT_OPT-4496-bug-in-WeightedRandomSelectionPopulation 
+   48  git stash apply
+   49  git staging
+   50  git co -
+   51  git stash apply
+   52  git stash
+   53  git co -
+   54  git get
+   55  git rebase origin/develop
+   56  git co develop 
+   57  git rebase origin/develop
+   58  git ls
+   59  git co -
+   60  git ls
+   61  git rebase -i e1b76cb
+   62  git ls
+   63  git rebase -i e1b76cb
+   64  git ls
+   65  git rebase -i e1b76cb
+   66  git commit --amend
+   67  git rebase --continue
+   68  git ls
+   69  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   70  git log
+   71  git co develop
+   72  git get
+   73  git rebase origin/develop
+   74  git merge --no-ff feature/HT_OPT-4496-bug-in-WeightedRandomSelectionPopulation 
+   75  git ls
+   76  git ls origin/develop
+   77  git get
+   78  git ls origin/develop
+   79  git ls
+   80  git push
+   81  git log
+   82  git co feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+   83  git stash apply
+   84  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   85  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   86  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   87  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   88  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   89  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   90  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   91  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   92  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+   93  git ls
+   94  git staging
+   95  cd dump/tars
+   96  tar -xvf ~/Downloads/hole-packing-2.tar 
+   97  git ls
+   98  git staging
+   99  git rebase -i e1b76cb
+  100  git rebase -i e1b76cb
+  101  git rebase -i e1b76cb
+  102  git rebase -i e1b76cb
+  103  git ls
+  104  git log
+  105  cd ..
+  106  cd ..
+  107  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+  108  git push origin feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative:review/bug/HT_OPT-7654-crash-multi-alternative 
+  109  git branch
+  110  git co feature/HT_OPT-7550-choose-repack-using-results-comparator 
+  111  git ls
+  112  git rebase origin/develop
+  113  git ls
+  114  git staging
+  115  git branch
+  116  git branch -D feature/HT_OPT-7648-test-fails-in-left-corner-large-part-rule 
+  117  git push origin :review/bug/HT_OPT-7648-test-fails-heavy 
+  118  git co feature/HT_OPT-let-repack-compare-execor-results 
+  119  git rebase origin/develop
+  120  git co -
+  121  git staging
+  122  git co feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  123  git statug
+  124  git status
+  125  git add polygons/testing/opt7654.xml.gz
+  126  git commit -m "Test polygon" polygons/testing/opt7654.xml.gz
+  127  git push origin feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative:review/bug/HT_OPT-7654-crash-multi-alternative 
+  128  git push origin feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative:review/bug/HT_OPT-7654-crash-multi-alternative 
+  129  git co -
+  130  git co -
+  131  git ls feature/HT_OPT-7550-choose-repack-using-results-comparator 
+  132  git co -
+  133  git ls
+  134  git ls
+  135  git rebase -i e1b76cb
+  136  git rebase -i e1b76cb
+  137  git ls
+  138  git push origin feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative:review/bug/HT_OPT-7654-int-offset-multi-alternative 
+  139  git co -
+  140  git staging
+  141  git stash
+  142  git co -
+  143  git statug
+  144  git statug
+  145  git status
+  146  git co -
+  147  git stash apply
+  148  git stash
+  149  git co -
+  150  git ls
+  151  git reset HEAD^
+  152  git ls
+  153  git rebase -i 9184e5c
+  154  git log
+  155  git push origin feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative:review/bug/HT_OPT-7654-int-offset-multi-alternative 
+  156  git co -
+  157  git stash apply
+  158  git stash
+  159  git co develop
+  160  git get
+  161  git rebase origin/develop
+  162  git co feature/HT_OPT-7541-filter-FMR-and-FMA
+  163  git co -b feature/HT_OPT-7541-filter-FMR-and-FMA
+  164  git stash apply
+  165  cd dump/tars
+  166  tar -xvf ~/Downloads/SUP-1125.tar 
+  167  cd ..
+  168  cd ..
+  169  git staging
+  170  cd dump/tars
+  171  tar -xvf ~/Downloads/SUP-1163.tar 
+  172  git staging
+  173  cd ..
+  174  cd ..
+  175  git stash
+  176  git co -
+  177  git co feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  178  git co develop 
+  179  git co -
+  180  git staging
+  181  git co -
+  182  git co feature/HT_OPT-7541-filter-FMR-and-FMA 
+  183  git stash apply
+  184  git co feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  185  git co feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  186  cd dump/tars
+  187  tar -xvf ~/Downloads/d8b96276-986c-11e8-aab2-0a580a000307.tar 
+  188  git staging
+  189  git ls
+  190  git push origin feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative:review/bug/HT_OPT-7654-int-offset-multi-alternative 
+  191  git co -
+  192  git ls
+  193  git staging
+  194  cd ..
+  195  cd ..
+  196  git staging
+  197  git co -
+  198  git ls
+  199  git staging
+  200  git co -
+  201  git staging
+  202  git ls
+  203  git co -
+  204  git ls
+  205  git push origin feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative:review/bug/HT_OPT-7654-int-offset-multi-alternative 
+  206  git co -
+  207  git staging
+  208  cd dump/tars
+  209  tar -xvf ~/Downloads/SUP-1082.tar 
+  210  tar -xvf ~/Downloads/37387b22.tar 
+  211  git staging
+  212  git co -
+  213  git co - 
+  214  git ls
+  215  git staging
+  216  git gt
+  217  git get
+  218  git ls origin/develop
+  219  git ls
+  220  git ls
+  221  git ls origin/develop
+  222  git ls
+  223  git get
+  224  git rebase -i origin/develop
+  225  git rebase origin/develop
+  226  git ls
+  227  git co develop 
+  228  git rebase origin/develop
+  229  git co -b feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input
+  230  git rebase feature/HT_OPT-7541-filter-FMR-and-FMA 
+  231  git ls
+  232  git rebase -i 3835195
+  233  git rebase -i 3835195
+  234  git rebase -i 3835195
+  235  git ls
+  236  git rebase -i 3835195
+  237  git rebase --abort
+  238  git rebase -i 3835195
+  239  git ls
+  240  git rebase -i 3835195
+  241  git rebase --abort
+  242  git rebase -i 3835195
+  243  git rebase -i 3835195
+  244  git log
+  245  git rebase -i 3835195
+  246  git ls
+  247  git rebase -i 3835195
+  248  git rebase --abort
+  249  git rebase -i 3835195
+  250  git --abort
+  251  git rebase  --abort
+  252  git log
+  253  git rebase -i 3835195
+  254  git rebase -i 3835195
+  255  git log
+  256  git rebase -i 3835195
+  257  git commit --amend
+  258  git rebase --continue
+  259  git ls
+  260  git ls feature/HT_OPT-7541-filter-FMR-and-FMA 
+  261  git cherry-pick ec066b0
+  262  git ls
+  263  git rebase -i 3835195
+  264  tar -xvf ~/Downloads/B18.tar 
+  265  git ls feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  266  cd ..
+  267  cd ..
+  268  git co develop 
+  269  git co -b feature/HT_OPT-7654-assertion-error-nested-multi-group
+  270  git rebase feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  271  git ls
+  272  git co feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  273  git rebase origin/develop 
+  274  git ls
+  275  git co develop 
+  276  git co -b bug/HT_OPT-7654-assertion-error-nested-multi-alternative
+  277  git rebase feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  278  git ls
+  279  git rebase -i 3835195
+  280  git rebase -i 3835195
+  281  git rebase -i 3835195
+  282  git ls
+  283  git log
+  284  git rebase -i 3835195
+  285  git commit --amend
+  286  git rebase --continue
+  287  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+  288  git rebase --exec "mvn clean compile" develop
+  289  git rebase --abort
+  290  git ls feature/HT_OPT-7654-assertion-crash-nesting-multi-alternative 
+  291  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+  292  git rebase --exec "mvn clean compile" develop
+  293  git rebase --exec "mvn clean compile" develop
+  294  git rebase --abort
+  295  git ls
+  296  git rebase -i 3835195
+  297  git rebase --exec "mvn clean compile" develop
+  298  git log
+  299  git ls
+  300  git get
+  301  git rebase origin/develop
+  302  git staging
+  303  git ls
+  304  git rebase -i 3835195
+  305  git staging
+  306  mvn --batch-mode pmd:check -DstyleCheckExcludeFile=syntax-test/pmd-exclusions.properties -DskipStyleCheck=false -Dpmd.printFailingErrors=true
+  307  git get
+  308  git rebase origin/develop
+  309  git co develop
+  310  git rebase origin/develop
+  311  git ls
+  312  git merge --no-ff bug/HT_OPT-7654-assertion-error-nested-multi-alternative 
+  313  git ls
+  314  git get
+  315  git ls origin/develop
+  316  git ls
+  317  git push
+  318  git log
+  319  git co feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input 
+  320  git log
+  321  git co develop
+  322  git get
+  323  git co -b feature/z-opt-7250 origin/review/feature/z-opt-7250-piling-refactor 
+  324  git co feature/z-opt-7260
+  325  git co feature/z-opt-7260
+  326  git co feature/z-opt-7250 
+  327  cd dump/tars/
+  328  tar -xvf ~/Downloads/piling.tar 
+  329  cd ..
+  330  cd ..
+  331  git co -
+  332  git staging
+  333  git co feature/HT_OPT-plus-one-select-nightly-packings-to-run 
+  334  git ls
+  335  git push origin feature/HT_OPT-plus-one-select-nightly-packings-to-run:review/feature/HT_OPT-plus-one-script-selection-of-nightly-from-regression 
+  336  git push origin feature/HT_OPT-plus-one-select-nightly-packings-to-run:review/feature/HT_OPT-plus-one-script-selection-of-nightly-from-regression2 
+  337  git co -
+  338  git co -
+  339  git co -
+  340  git push origin :review/feature/HT_OPT-plus-one-script-selection-of-nightly-from-regression
+  341  git ls
+  342  git rebase -i 3835195
+  343  git rebase --abort
+  344  git rebase -i 3835195
+  345  git reset ^HEAD
+  346  git reset HEAD^
+  347  git reset HEAD^
+  348  git log
+  349  git log feature/HT_OPT-7541-filter-FMR-and-FMA 
+  350  git ls
+  351  git rebase -i 3835195
+  352  git commit --amend
+  353  git rebase --continue
+  354  git log
+  355  git get
+  356  git rebase origin/develop
+  357  git ls
+  358  git rebase origin/develop
+  359  git ls
+  360  git staging
+  361  git co feature/z-opt-7250 
+  362  git co feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input 
+  363  git staging
+  364  git log
+  365  git push origin feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input:review/feature/HT_OPT-7541-fill-merge-algorithm-inputs
+  366  cd dump/tars
+  367  tar -xvf ~/Downloads/55f2ec6c-bc03-11e8-99c2-0a580a000140.tar 
+  368  cd ..
+  369  cd ..
+  370  cd ..
+  371  git clone ssh://helena@gerrit.tomo.cloud:29418/optisim && scp -p -P 29418 helena@gerrit.tomo.cloud:hooks/commit-msg optisim/.git/hooks/
+  372  cd optimizer
+  373  git co develop
+  374  git get
+  375  git co -b review/feature/jw_OPT-7747_stripe-search-cleanup 
+  376  git co -
+  377  git co -b feature/jw_OPT-7747 origin/review/feature/jw_OPT-7747_stripe-search-cleanup 
+  378  git co -
+  379  git co feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input 
+  380  git ls
+  381  git push origin feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input:review/feature/HT_OPT-7541-fill-merge-algorithm-inputs
+  382  git get
+  383  git co develop 
+  384  git rebase origin/develop
+  385  git stash
+  386  git rebase origin/develop
+  387  git ls
+  388  git co 7ed2297
+  389  cd ..
+  390  cd ..
+  391  postgres -D /usr/local/var/postgres
+  392  postgres -D /usr/local/var/postgres
+  393  cd ..
+  394  cd ..
+  395  pip install xerox
+  396  brew install python3
+  397  brew upgrade python
+  398  pip install xerox
+  399  pip install pyperclip
+  400  pip --version
+  401  pip3 install --upgrade pip
+  402  cd Tomologic/optimizer
+  403  bin/cherry-pick-in-nightly.py
+  404  bin/cherry-pick-in-nightly.py
+  405  bin/cherry-pick-in-nightly.py
+  406  bin/cherry-pick-in-nightly.py
+  407  bin/cherry-pick-in-nightly.py
+  408  bin/cherry-pick-in-nightly.py
+  409  cd bin/
+  410  cherry-pick-in-nightly.py
+  411  ./cherry-pick-in-nightly.py
+  412  ./cherry-pick-in-nightly.py
+  413  ./cherry-pick-in-nightly.py
+  414  ./cherry-pick-in-nightly.py
+  415  ./cherry-pick-in-nightly.py
+  416  ./cherry-pick-in-nightly.py
+  417  ./cherry-pick-in-nightly.py
+  418  ./cherry-pick-in-nightly.py
+  419  ./cherry-pick-in-nightly.py
+  420  ./cherry-pick-in-nightly.py
+  421  ./cherry-pick-in-nightly.py
+  422  ./cherry-pick-in-nightly.py
+  423  ./cherry-pick-in-nightly.py
+  424  ./cherry-pick-in-nightly.py
+  425  ./cherry-pick-in-nightly.py
+  426  ./cherry-pick-in-nightly.py
+  427  ./cherry-pick-in-nightly.py
+  428  ./cherry-pick-in-nightly.py
+  429  ./cherry-pick-in-nightly.py
+  430  ./cherry-pick-in-nightly.py
+  431  ./cherry-pick-in-nightly.py
+  432  ./cherry-pick-in-nightly.py
+  433  ./cherry-pick-in-nightly.py
+  434  ./cherry-pick-in-nightly.py
+  435  ./cherry-pick-in-nightly.py
+  436  ./cherry-pick-in-nightly.py
+  437  ./cherry-pick-in-nightly.py
+  438  ./cherry-pick-in-nightly.py
+  439  git status
+  440  ./cherry-pick-in-nightly.py
+  441  pip3 install google-cloud-storage
+  442  ./cherry-pick-in-nightly.py
+  443  ./cherry-pick-in-nightly.py
+  444  ./cherry-pick-in-nightly.py
+  445  gcloud components update
+  446  ./cherry-pick-in-nightly.py
+  447  ./cherry-pick-in-nightly.py
+  448  ./cherry-pick-in-nightly.py
+  449  git status
+  450  ./cherry-pick-in-nightly.py
+  451  ./cherry-pick-in-nightly.py
+  452  ./cherry-pick-in-nightly.py
+  453  cd ..
+  454  git co develop 
+  455  git get
+  456  git co -b feature/HT_OPT-plus-one-select-nightly-packings-to-run
+  457  git add bin/selectFromNightly.py
+  458  git commit -m "Script for selecting nightly packings." bin/selectFromNightly.py
+  459  git ls
+  460   git push origin feature/HT_OPT-plus-one-select-nightly-packings-to-run:review/feature/HT_OPT-plus-one-script-selection-of-nightly-from-regression
+  461  cd bin/
+  462  ./cherry-pick-in-nightly.py
+  463  ./selectFromNightly.py 
+  464  ./selectFromNightly.py 
+  465  ./selectFromNightly.py 
+  466  ./selectFromNightly.py 
+  467  git status
+  468  cd ..
+  469  git add bin/selectFromNightly.py
+  470  git commit -m "Help from Micke." bin/selectFromNightly.py
+  471  git ls
+  472  git add bin/selectFromNightly.py
+  473  git commit -m "Help from Micke." bin/selectFromNightly.py
+  474  git rebase -i 465025c
+  475  git log
+  476  git get
+  477  git rebase origin/develop 
+  478  git co develop 
+  479  git rebase origin/develop 
+  480  git ls
+  481  git ls origin/develop
+  482  git merge --no-ff feature/HT_OPT-plus-one-select-nightly-packings-to-run 
+  483  git ls
+  484  git ls origin/develop
+  485  git log
+  486  git push
+  487  git ls feature/HT_OPT-7541-filter-FMR-and-FMA 
+  488  git co feature/HT_OPT-7541-filter-FMR-and-FMA 
+  489  git ls feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input 
+  490  git co feature/HT_OPT-7541-filter-fill-merges-for-static-planning-input 
+  491  git co develop
+  492  git co -
+  493  git co develop
+  494  git stash
+  495  git co develop
+  496  psql
+  497  cd /usr/local/var/postgres/
+  498  psql diving5
+  499  cd /usr/local/var/postgres/
+  500  cd /usr/local/var/postgres/
+  501  psql diving5
+  502  pg_dump diving5 > lusentestdbdumpe.txt
+  503  ls -la
+  504  pg_dump diving6 > lusentestdbdumpe.txt
+  505  pg_dump diving5 > lusentestdbdumpe.txt
+  506  pg_dump --data-only diving5 > lusentestdbdumpe.txt
+  507  pg_restore diving6 --exit-on-error lusentestdbdumpe.txt 
+  508  pg_restore -d diving6 --exit-on-error lusentestdbdumpe.txt 
+  509  pg_dump --data-only diving5 > lusentestdbdumpe.dump
+  510  pg_restore -d diving6 --exit-on-error lusentestdbdumpe.dump
+  511  pg_restore -d diving6 lusentestdbdumpe.dump
+  512  pg_restore -d diving6 < lusentestdbdumpe.dump
+  513  pg_dump --data-only diving5 > lusentestdbdumpe.sql
+  514  psql -d diving6 -1 -f lusentestdbdumpe.sql
+  515  psql diving
+  516  psql diving6
+  517  psql diving7
+  518  psql postgres
+  519  cd PlusOne/
+  520  cd my_dives/
+  521  rustup update
+  522  history > my_dives.txt

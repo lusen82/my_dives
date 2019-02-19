@@ -1,29 +1,29 @@
 use diesel::prelude::*;
 
-use models::{Dive, Diver, NewDiver, NewLoggedInUser, LoggedInUser, NewDiversDive};
+use crate::models::{Dive, Diver, NewDiver, NewLoggedInUser, LoggedInUser, NewDiversDive};
 
-use models::Training;
-use models::NewTrainingsDive;
-use models::NewTraining;
-use models::NewDiversTraining;
-use form_data::LogDive;
-use core_database_api;
-use form_data::UserRegister;
+use crate::models::Training;
+use crate::models::NewTrainingsDive;
+use crate::models::NewTraining;
+use crate::models::NewDiversTraining;
+use crate::form_data::LogDive;
+use crate::core_database_api;
 
-use utils;
-use form_data::UserLogin;
-use utils::CliError;
-use diesel::insert_into;
-use models::TrainingsDives;
+use crate::deletion_database_api;
+use crate::form_data::UserRegister;
+use crate::form_data::UserLogin;
+use crate::utils::CliError;
+use crate::diesel::insert_into;
+use crate::models::TrainingsDives;
 use chrono::NaiveDate;
 
-use models::CompetitionDive;
-use models::Competition;
-use models::NewCompetition;
-use form_data::LogCompetitionDive;
-use models::NewCompetitionDive;
-use form_data::AddCompetition;
-use form_data::AddTraining;
+use crate::models::CompetitionDive;
+use crate::models::Competition;
+use crate::models::NewCompetition;
+use crate::form_data::LogCompetitionDive;
+use crate::models::NewCompetitionDive;
+use crate::form_data::AddCompetition;
+use crate::form_data::AddTraining;
 use std::collections::HashMap;
 use std::borrow::BorrowMut;
 use itertools::Itertools;
@@ -45,7 +45,7 @@ pub fn register_user(user_registration: &UserRegister) -> Result<String, CliErro
 
     println!("Registering user {}", &log_in_name);
     let conn = super::establish_connection();
-    use schema::loggedinusers;
+    use crate::schema::loggedinusers;
     let new_logged_in_user = NewLoggedInUser {
         log_in_name,
         password,
@@ -54,7 +54,7 @@ pub fn register_user(user_registration: &UserRegister) -> Result<String, CliErro
 
     let logged_in_user_id = &user.id;
     println!("Registered user id {}", &logged_in_user_id);
-    use schema::divers;
+    use crate::schema::divers;
     let new_diver = NewDiver {
         logged_in_user_id,
         name,
@@ -70,7 +70,7 @@ pub fn verify_user_in_db(user_login: &UserLogin) -> Result<String, CliError>
 {
     let user_name: String = user_login.username.to_string();
     let pass_word: String = user_login.password.to_string();
-    use schema::loggedinusers::dsl::*;
+    use crate::schema::loggedinusers::dsl::*;
 
     let connection = super::establish_connection();
     let results: Vec<LoggedInUser> = loggedinusers
@@ -90,7 +90,7 @@ pub fn verify_user_in_db(user_login: &UserLogin) -> Result<String, CliError>
 
 pub fn get_name_of_logged_in_user(id_of_user: &str) -> Option<String>
 {
-    use schema::loggedinusers::dsl::*;
+    use crate::schema::loggedinusers::dsl::*;
     let int_id_of_user = id_of_user.parse::<i32>().unwrap();
     let connection = super::establish_connection();
     let results: LoggedInUser = loggedinusers.find(int_id_of_user)
@@ -108,8 +108,6 @@ pub fn add_training(user_id: &str, training: &AddTraining) -> Result<(), CliErro
     let date : NaiveDate = NaiveDate::parse_from_str(date_time, "%Y-%m-%d")?;
     let t: DateTime<Utc> = Utc::now();
     let now : NaiveDate = NaiveDate::from_ymd(t.year(), t.month(), t.day());
-    println!("date {}", date.format("%Y-%m-%d"));
-    println!("now {}", now.format("%Y-%m-%d"));
     if date.gt(&now) {
         println!("Date before");
         return Err(CliError::Option(NoneError));
@@ -121,12 +119,12 @@ pub fn add_training(user_id: &str, training: &AddTraining) -> Result<(), CliErro
     let connection = super::establish_connection();
 
     let user_or_diver_id = user_id.parse::<i32>()?;
-    use schema::divers::dsl::*;
+    use crate::schema::divers::dsl::*;
     let diver:Vec<Diver>= divers.filter(logged_in_user_id.eq(user_or_diver_id)).load::<Diver>(&connection)?;
 
     let new_training = NewTraining { diver_id: &diver.first()?.id, date_time, feeling, comment };
     println!("Created training");
-    use schema::trainings;
+    use crate::schema::trainings;
     let tra = insert_into(trainings::table).values(&new_training).get_result::<Training>(&connection);
     if tra.is_err() {
         println!("{}", tra.err().unwrap().to_string());
@@ -140,7 +138,7 @@ pub fn add_training(user_id: &str, training: &AddTraining) -> Result<(), CliErro
           training_id: &training.id,
       };
 
-    use schema::diverstrainings;
+    use crate::schema::diverstrainings;
     insert_into(diverstrainings::table).values(&new_training).execute(&connection)?;
 
     Ok(())
@@ -169,12 +167,12 @@ pub fn add_competition(user_id: &str, competition: &AddCompetition) -> Result<()
     let connection = super::establish_connection();
 
     let user_id_i32 = user_id.parse::<i32>()?;
-    use schema::divers::dsl::*;
+    use crate::schema::divers::dsl::*;
     let diver:Vec<Diver>= divers.filter(logged_in_user_id.eq(user_id_i32)).load::<Diver>(&connection)?;
 
     let new_competition = NewCompetition { diver_id: &diver.first()?.id, date_time,
         competition_name, feeling, comment };
-    use schema::competitions;
+    use crate::schema::competitions;
     insert_into(competitions::table).values(&new_competition).get_result::<Competition>(&connection)?;
 
     Ok(())
@@ -187,14 +185,14 @@ pub fn log_dives_on_training(user_id: &str, dive: &LogDive) -> Result<(), CliErr
 
     let connection = super::establish_connection();
 
-    use schema::dives::dsl::*;
+    use crate::schema::dives::dsl::*;
     let results: Vec<Dive> = dives.filter(code.eq(dive_code)).filter(height.eq(height_val))
            .limit(5)
            .load::<Dive>(&connection)?;
 
     let user_or_diver_id = user_id.parse::<i32>()?;
 
-    use schema::divers::dsl::*;
+    use crate::schema::divers::dsl::*;
     let diver : Vec<Diver>= divers.filter(logged_in_user_id.eq(user_or_diver_id))
               .limit(5)
               .load::<Diver>(&connection)?;
@@ -202,18 +200,18 @@ pub fn log_dives_on_training(user_id: &str, dive: &LogDive) -> Result<(), CliErr
     let dive_id = &results.first()?.id;
     let new_divers_dive = NewDiversDive { diver_id: &diver.first()?.id, dive_id };
 
-    use schema::diversdives;
+    use crate::schema::diversdives;
     insert_into(diversdives::table).values(&new_divers_dive).execute(&connection)?;
 
     let training_id: &i32 = &dive.training_id.to_string().parse::<i32>()?;
     let nr_of_times: &i16 = &dive.number.to_string().parse()?;
     let feeling: &i16 = &dive.feeling.to_string().parse()?;
-    println!("BEFORE");
+
     let comment = &dive.comment.url_decode()?;
-    println!("AFTER");
+
     let new_trainings_dive = NewTrainingsDive { training_id, dive_id, nr_of_times, feeling, comment};
 
-    use schema::trainingsdives;
+    use crate::schema::trainingsdives;
 
     insert_into(trainingsdives::table).values(&new_trainings_dive).execute(&connection)?;
 
@@ -231,7 +229,7 @@ pub fn log_dives_on_competition(dive: &LogCompetitionDive) -> Result<(), CliErro
 
     let connection = super::establish_connection();
 
-    use schema::dives::dsl::*;
+    use crate::schema::dives::dsl::*;
     let results: Vec<Dive> = dives.filter(code.eq(dive_code)).filter(height.eq(height_val))
        .limit(5)
        .load::<Dive>(&connection)?;
@@ -239,7 +237,7 @@ pub fn log_dives_on_competition(dive: &LogCompetitionDive) -> Result<(), CliErro
     let dive_id = &results.first()?.id;
     let new_competitions_dive = NewCompetitionDive { dive_id, competition_id, score, feeling, comment };
 
-    use schema::competitiondives;
+    use crate::schema::competitiondives;
     insert_into(competitiondives::table).values(&new_competitions_dive).execute(&connection)?;
 
     Ok(())
@@ -258,14 +256,14 @@ pub fn get_dives_for_training(training_id: &str) -> Result<Vec<(String, String)>
     let id_: i32 = training_id.trim_matches('+').parse::<i32>()?;
 
     let connection = super::establish_connection();
-    use schema::trainings::dsl::*;
+    use crate::schema::trainings::dsl::*;
     let found_training = trainings.find(id_).first::<Training>(&connection)?;
 
     let dives_in_training: Vec<TrainingsDives> = core_database_api::get_dives_in_training(&found_training)?;
 
     let dives_for_training: Vec<(String, String)> = dives_in_training.into_iter().map(
         |f| {
-            use schema::dives::dsl::*;
+            use crate::schema::dives::dsl::*;
             let code_and_height: Dive = dives.find(f.dive_id).first::<Dive>(&connection).expect("err");
 
             let str = (format!("{} on {} : {} times. Comment: {}",
@@ -283,7 +281,7 @@ pub fn get_dives_for_competition(competition_id: &str) -> Result<Vec<String>, Cl
     let id_: i32 = competition_id.trim_matches('+').parse::<i32>()?;
 
     let connection = super::establish_connection();
-    use schema::competitions::dsl::*;
+    use crate::schema::competitions::dsl::*;
     let found_competition = competitions.find(id_).first::<Competition>(&connection)?;
 
     let dives_in_competition: Vec<CompetitionDive> = core_database_api::get_dives_in_competition(&found_competition)?;
@@ -291,7 +289,7 @@ pub fn get_dives_for_competition(competition_id: &str) -> Result<Vec<String>, Cl
     let dives_for_competition: Vec<String> = dives_in_competition
         .into_iter()
         .map(|f| {
-            use schema::dives::dsl::*;
+            use crate::schema::dives::dsl::*;
             let code_and_height: Dive = dives.find(f.dive_id).first::<Dive>(&connection).expect("err");
 
             let strf = format!("{} on {} : {} score. Comment: {}",
@@ -308,7 +306,7 @@ pub fn get_stats_for_dive(dive_id: &str, user_id: &str) -> Result<Vec<(String, S
 
     let d_id: i32 = dive_id.trim_matches('+').parse::<i32>()?;
 
-    use schema::dives::dsl::*;
+    use crate::schema::dives::dsl::*;
     let this_dive : Dive = dives.find(d_id).first::<Dive>(&connection)?;
 
     let trainings = core_database_api::get_trainings(user_id)?;
@@ -348,7 +346,7 @@ pub fn get_stats_for_dive(dive_id: &str, user_id: &str) -> Result<Vec<(String, S
 }
 
 pub fn get_trainings(user_id: &str) -> Result<Vec<Training>, CliError> {
-    println!("user_id {}", user_id);
+
     let mut get_trainings = core_database_api::get_trainings(user_id)?;
     get_trainings.sort_by_key(|t|
         {
@@ -367,8 +365,14 @@ pub fn get_trainings(user_id: &str) -> Result<Vec<Training>, CliError> {
     Ok(get_trainings)
 }
 
+pub fn delete_training(training_id_: &str) -> Result<(), CliError> {
+    println!("deleting training {}", &training_id_);
+
+    deletion_database_api::delete_training(training_id_)
+}
+
 pub fn get_competitions(user_id: &str) -> Result<Vec<Competition>, CliError> {
-    println!("In get competitions");
+
     let mut get_competitions = core_database_api::get_competitions(user_id)?;
     get_competitions.sort_by_key(|t|
         {
@@ -399,10 +403,9 @@ pub fn get_competition_dives(user_id: &str) -> Result<HashMap<i32, (String, Vec<
         {
             result.into_iter().foreach( |d|
                 {
-                    use schema::dives::dsl::*;
+                    use crate::schema::dives::dsl::*;
                     if let Ok(this_dive) = dives.find(d.dive_id).first::<Dive>(&connection)
                         {
-                            println!("this dive is in competition {}", &this_dive.code);
                             let competition_date = &comp.date_time.replace("-", "");
                             let id__: i32 = d.dive_id;
                             let option: Option<(String, Vec<(String, String)>)> = map.remove(&id__);

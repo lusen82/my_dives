@@ -10,7 +10,7 @@ pub struct TemplateContextStatsOverviewAllDives {
     pub name: Option<String>,
     pub amount_per_dive_group: Vec<String>,
     pub amount_per_height: Vec<String>,
-    pub amount_per_dive: Vec<String>
+    pub amount_per_dive: Vec<Vec<String>>
 }
 
 #[derive(Serialize)]

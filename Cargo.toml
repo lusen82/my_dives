@@ -2,10 +2,11 @@
 name = "my_dives"
 version = "0.1.0"
 authors = ["Helena Troili <helena.troili@tomologic.com>"]
+edition = "2018"
 
 [dependencies]
-rocket = "*"
-rocket_codegen = "*"
+rocket = { version = "0.4.0", features = ["tls"] }
+rocket_codegen = "0.4"
 rand = "0.4"
 diesel = { version = "1.3.2", features = ["postgres"] }
 dotenv = "0.9"
@@ -18,7 +19,7 @@ chrono = "0.4"
 
 [dependencies.rocket_contrib]
 default-features = false
-features = ["tera_templates"]
+features = ["tera_templates", "json"]
 #
 #[build-dependencies]
 #clippy = { version = "*", optional = true }

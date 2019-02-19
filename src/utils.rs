@@ -1,12 +1,11 @@
 
-use std::mem;
 use rocket::http::{Cookie, Cookies};
 use std::option::NoneError;
 use std::io;
 use core::num;
-use models::Training;
+use crate::models::Training;
 use std::str::Utf8Error;
-use models::Competition;
+use crate::models::Competition;
 
 
 pub enum CliError {

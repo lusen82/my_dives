@@ -1,6 +1,7 @@
-#![plugin(rocket_codegen)]
-#![feature(plugin, custom_derive, decl_macro)]
-extern crate rocket;
+
+#![feature(proc_macro_hygiene, decl_macro)]
+#![feature(custom_attribute)]
+#[macro_use] extern crate rocket;
 extern crate rand;
 extern crate diesel;
 extern crate my_dives;
@@ -12,13 +13,14 @@ extern crate tera;
 use rocket::request::{Form, self, FromRequest, Request};
 use rocket::response::{Redirect, Flash};
 use rocket::http::{Cookie, Cookies};
+use rocket::http::uri::Uri;
 use rocket::outcome::IntoOutcome;
 use my_dives::template_context::{TemplateContext,
                                  TemplateContextTrainingsAndDives};
 use my_dives::form_data::{AddTraining, LogDive, UserLogin, UserRegister, SelectTraining};
 use my_dives::database_api;
 use my_dives::utils;
-use rocket_contrib::Template;
+use rocket_contrib::templates::Template;
 use my_dives::form_data::SelectDive;
 use my_dives::template_context::TemplateContextStatisticsForDive;
 use std::path::PathBuf;
@@ -38,6 +40,7 @@ use my_dives::template_context::TemplateContextCompetitionDivesAndData;
 
 use std::borrow::Borrow;
 
+
 impl<'a, 'r> FromRequest<'a, 'r> for User {
     type Error = ();
     fn from_request(request: &'a Request<'r>) -> request::Outcome<User, ()> {
@@ -53,12 +56,14 @@ pub struct User(usize);
 
 #[post("/login", data = "<user_form>")]
 fn login<'a>(mut cookies: Cookies,
-             user_form: Form<'a, UserLogin<'a>>) -> Result<Redirect, String> {
-    let user_login = user_form.get();
+             user_form: Form<UserLogin<'a>>) -> Result<Redirect, String> {
+    let user_login = user_form;
 
     if let Ok(user_id) = database_api::verify_user_in_db(&user_login) {
         cookies.add_private(Cookie::new("user_id", user_id.clone()));
-        return Ok(Redirect::to(["/".to_string().as_str()].join("").as_str()));
+        let uri = Uri::parse("/").expect("valid URI");
+
+        return Ok(Redirect::to(uri));
     }
 
     return Err(format!("Unrecognized user, '{}'.", user_login.username));
@@ -66,21 +71,24 @@ fn login<'a>(mut cookies: Cookies,
 
 #[post("/register", data = "<register_form>")]
 fn register<'a>(mut cookies: Cookies,
-                register_form: Form<'a, UserRegister<'a>>) -> Result<Redirect, String> {
-    let user_registration: &UserRegister = register_form.get();
+                register_form: Form<UserRegister>) -> Result<Redirect, String> {
+    let user_registration: &UserRegister = &register_form;
 
     if let Ok(logged_in_new_user_id) = database_api::register_user(&user_registration) {
         cookies.add_private(Cookie::new("user_id", logged_in_new_user_id));
-        return Ok(Redirect::to(["/statistics/", "get_dives"].join("").as_str()));
+        let uri = Uri::parse("/statistics/get_dives").expect("valid URI");
+        return Ok(Redirect::to(uri));
     }
     return Err(format!("Registration failed user, '{}'.", user_registration.username));
 }
 
 #[post("/get_add_training", data = "<get_add_training>")]
 fn get_add_training<'a>(cookies: Cookies,
-                        get_add_training: Form<'a, AddTraining<'a>>) -> Flash<Redirect> {
-    let training: &AddTraining = get_add_training.get();
-    let redirect = Redirect::to(["", "get_log_training_form"].join("").as_str());
+                        get_add_training: Form<AddTraining>) -> Flash<Redirect> {
+    let training: &AddTraining = &get_add_training;
+    let uri = Uri::parse("get_log_training_form").expect("valid URI");
+
+    let redirect = Redirect::to(uri);
 
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         if let Ok(()) = database_api::add_training(user_id.as_str(), training) {
@@ -88,15 +96,16 @@ fn get_add_training<'a>(cookies: Cookies,
             return Flash::success(redirect, "Successfully added dive.");  // TODO what is flash..
         }
     }
-    println!("Fiailsf add tra");
     return Flash::error(redirect, "Failed adding dive");
 }
 
 #[post("/get_add_competition", data = "<get_add_competition>")]
 fn get_add_competition<'a>(cookies: Cookies,
-                           get_add_competition: Form<'a, AddCompetition<'a>>) -> Flash<Redirect> {
-    let competition: &AddCompetition = get_add_competition.get();
-    let redirect = Redirect::to(["", "get_log_competition_form"].join("").as_str());
+                           get_add_competition: Form<AddCompetition>) -> Flash<Redirect> {
+    let competition: &AddCompetition = &get_add_competition;
+    let uri = Uri::parse("get_log_competition_form").expect("valid URI");
+
+    let redirect = Redirect::to(uri);
 
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         if let Ok(()) = database_api::add_competition(user_id.as_str(), competition) {
@@ -109,16 +118,19 @@ fn get_add_competition<'a>(cookies: Cookies,
 
 #[post("/present_selected_training", data = "<select_training>")]
 fn present_selected_training<'a>(cookies: Cookies,
-                                 select_training: Form<'a, SelectTraining<'a>>) -> Template {
+                                 select_training: Form<SelectTraining>) -> Template {
     println!("In selected training presentation");
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         let name = database_api::get_name_of_logged_in_user(user_id.as_str());
-        let training: &SelectTraining = select_training.get();
+        let training: &SelectTraining = &select_training;
 
         if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
             let trainings = utils::get_trainings_statics(training_data);
+
             if let Ok(dives_for_training) = database_api::get_dives_for_training(training.id) {
                 let id_ = training.id.trim_matches('+');
+
+
                 return Template::render("trainings",
                                         TemplateContextTrainingsAndDives {
                                             name,
@@ -134,12 +146,41 @@ fn present_selected_training<'a>(cookies: Cookies,
     return Template::render("index", TemplateContext { name: None });
 }
 
-#[post("/present_selected_competition", data = "<select_competition>")]
-fn present_selected_competition<'a>(cookies: Cookies,
-                                    select_competition: Form<'a, SelectCompetition<'a>>) -> Template {
+#[post("/delete_training", data = "<select_training>")]
+fn delete_training<'a>(cookies: Cookies,
+                       select_training: Form<SelectTraining>) -> Template {
+    println!("In selected training presentation");
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         let name = database_api::get_name_of_logged_in_user(user_id.as_str());
-        let competition: &SelectCompetition = select_competition.get();
+        let training: &SelectTraining = &select_training;
+
+        let id_ = training.id.trim_matches('+');
+        let _result = database_api::delete_training(id_);
+        // TODO handle _result.
+        if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
+            let trainings = utils::get_trainings_statics(training_data);
+
+            return Template::render("trainings",
+                                        TemplateContextTrainingsAndDives {
+                                            name,
+                                            trainings,
+                                            selected_training: None,
+                                            dives_for_training: vec![],
+                                            successful_add: None
+                                        });
+
+        }
+    }
+
+    return Template::render("index", TemplateContext { name: None });
+}
+
+#[post("/present_selected_competition", data = "<select_competition>")]
+fn present_selected_competition<'a>(cookies: Cookies,
+                                    select_competition: Form<SelectCompetition>) -> Template {
+    if let Some(user_id) = utils::check_if_login_cookie(cookies) {
+        let name = database_api::get_name_of_logged_in_user(user_id.as_str());
+        let competition: &SelectCompetition = &select_competition;
 
         if let Ok(competition_data) = database_api::get_competitions(user_id.as_str()) {
             let competitions = utils::get_competition_statics(competition_data);
@@ -163,9 +204,9 @@ fn present_selected_competition<'a>(cookies: Cookies,
 
 #[post("/present_selected_dive", data = "<select_dive>")]
 fn present_selected_dive<'a>(cookies: Cookies,
-                             select_dive: Form<'a, SelectDive<'a>>) -> Template {
+                             select_dive: Form<SelectDive>) -> Template {
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
-        let dive: &SelectDive = select_dive.get();
+        let dive: &SelectDive = &select_dive;
 
         if let Ok(dives_data) = database_api::get_users_unique_dives(user_id.as_str()) {
             if let Ok(stats_for_dive) = database_api::get_stats_for_dive(&dive.id.as_str(),
@@ -199,9 +240,9 @@ fn present_selected_dive<'a>(cookies: Cookies,
 }
 
 #[post("/get_log_training", data = "<get_log_training>")]
-fn get_log_training<'a>(cookies: Cookies, get_log_training: Form<'a, LogDive<'a>>) -> Template {
+fn get_log_training<'a>(cookies: Cookies, get_log_training: Form<LogDive>) -> Template {
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
-        let dive: &LogDive = get_log_training.get();
+        let dive: &LogDive = &get_log_training;
 
         let name = database_api::get_name_of_logged_in_user(user_id.as_str());
         if let Ok(()) = database_api::log_dives_on_training(user_id.as_str(), dive) {
@@ -239,9 +280,9 @@ fn get_log_training<'a>(cookies: Cookies, get_log_training: Form<'a, LogDive<'a>
 
 #[post("/get_log_competition", data = "<get_log_competition>")]
 fn get_log_competition<'a>(cookies: Cookies,
-                           get_log_competition: Form<'a, LogCompetitionDive<'a>>) -> Template {
+                           get_log_competition: Form<LogCompetitionDive>) -> Template {
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
-        let dive: &LogCompetitionDive = get_log_competition.get();
+        let dive: &LogCompetitionDive = &get_log_competition;
 
                 let name = database_api::get_name_of_logged_in_user(user_id.as_str());
         if let Ok(competition_data) = database_api::get_competitions(user_id.as_str()) {
@@ -349,7 +390,10 @@ pub fn get_stats_overview(cookies: Cookies) -> Template {
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         if let Ok(per_group) = statistics_overview::get_stats_overview_per_group(user_id.as_str()) {
             if let Ok(per_height) = statistics_overview::get_amount_dives_per_height(user_id.as_str()) {
+
                 let name = database_api::get_name_of_logged_in_user(user_id.as_str());
+
+
                 return Template::render("dive_statistics_overview",
                                         TemplateContextStatsOverviewAllDives {
                                             name,
@@ -357,17 +401,56 @@ pub fn get_stats_overview(cookies: Cookies) -> Template {
                                             amount_per_height: per_height,
                                             amount_per_dive: vec![],
                                         });
+
             }
         }
     }
     return Template::render("index", TemplateContext { name: None });
 }
 
+use rocket::response::content;
+use std::str::FromStr;
+
+#[get("/get_data_for_comp_dive")]
+pub fn get_data_for_comp_dive(cookies: Cookies) -> content::Json<&'static str> {
+    if let Some(user_id) = utils::check_if_login_cookie(cookies) {
+        if let Ok(per_comp_dive) = statistics_overview::get_amount_competition_dives(user_id.as_str()) {
+
+
+            let name = database_api::get_name_of_logged_in_user(user_id.as_str());
+          let serialized: String = serde_json::to_string(&per_comp_dive).unwrap();
+            let x = string_to_static_str(serialized);
+            let json = content::Json(x);
+            return json;
+        }
+    }
+    return content::Json("{ 'something': 'went wrong' }");
+}
+
+#[get("/get_data_for_dive")]
+pub fn get_data_for_dive(cookies: Cookies) -> content::Json<&'static str> {
+    if let Some(user_id) = utils::check_if_login_cookie(cookies) {
+        if let Ok(per_comp_dive) = statistics_overview::get_amount_dives(user_id.as_str()) {
+            let name = database_api::get_name_of_logged_in_user(user_id.as_str());
+            let serialized: String = serde_json::to_string(&per_comp_dive).unwrap();
+
+            let x = string_to_static_str(serialized);
+            let json = content::Json(x);
+            return json;
+        }
+    }
+    return content::Json("{ 'something': 'went wrong' }");
+}
+
+fn string_to_static_str(s: String) -> &'static str {
+    Box::leak(s.into_boxed_str())
+}
+
 #[post("/present_selected_competition_dive", data = "<select_dive>")]
 fn present_selected_competition_dive<'a>(cookies: Cookies,
-                                         select_dive: Form<'a, SelectDive<'a>>) -> Template {
+                                         select_dive: Form<SelectDive>) -> Template {
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
-        let dive: &SelectDive = select_dive.get();
+        let dive: &SelectDive = &select_dive;
 
 
         if let Ok(dives_data) = database_api::get_competition_dives(user_id.as_str()) {
@@ -393,17 +476,11 @@ fn present_selected_competition_dive<'a>(cookies: Cookies,
             let i32_id = id_.parse::<i32>().unwrap();
             let x: &Vec<(String, String)> = &dives_data.borrow().get(&i32_id).unwrap().1;
             let y = x.clone();
-//            let value: Vec<(String, String)> = y.into_iter()
-//                .map(|vitem| {
-//                    (vitem.0.replace("-", ""), vitem.1)
-//                }).collect();
 
             let rand: (Vec<String>, Vec<String>) = y.into_iter().unzip();
 
             let times_for_comp: Vec<String> = rand.0;
             let score_data: Vec<String> = rand.1;
-            println!("times_for_comp {} and {}", times_for_comp.len(), times_for_comp[0]);
-            println!("scoredata {} and {}", score_data.len(), score_data[0]);
             return Template::render("competition_dives", TemplateContextCompetitionDivesAndData {
                 name,
                 competition_dives,
@@ -434,7 +511,7 @@ fn trainings(cookies: Cookies) -> Template {
 }
 
 #[get("/")]
-fn index(cookies: Cookies) -> Template {
+fn index(_cookies: Cookies) -> Template {
     return Template::render("index", TemplateContext { name: None });
 }
 
@@ -500,11 +577,11 @@ fn err(x: Error) -> Result<NamedFile, Error> { Err(x) }
 fn rocket() -> rocket::Rocket {
     rocket::ignite()
         .mount("/", routes![index, get_dives, login, register,
-        get_log_training_form,get_add_training, get_log_training, present_selected_training,
+        get_log_training_form,get_add_training, get_log_training, present_selected_training,delete_training,
         competitions, competition_dives, get_log_competition_form,get_add_competition,
         get_log_competition, present_selected_competition,
         present_selected_dive, present_selected_competition_dive, login_page,
-        register_page, static_content, get_stats_overview, trainings])
+        register_page, static_content, get_stats_overview, get_data_for_comp_dive, get_data_for_dive, trainings])
         .attach(Template::fairing())
 }
 

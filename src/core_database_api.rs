@@ -1,18 +1,18 @@
 use diesel::prelude::*;
 
-use models::{Dive, Diver, LoggedInUser, DiversDives};
-use models::DiversTrainings;
-use models::Training;
-use models::TrainingsDives;
-use core_database_api;
-use utils::CliError;
-use models::CompetitionDive;
-use models::Competition;
+use crate::models::{Dive, Diver, LoggedInUser, DiversDives};
+use crate::models::DiversTrainings;
+use crate::models::Training;
+use crate::models::TrainingsDives;
+use crate::core_database_api;
+use crate::utils::CliError;
+use crate::models::CompetitionDive;
+use crate::models::Competition;
 
 pub fn get_diver_from_user(user_id: &str) -> Result<Diver, CliError> {
     let id_ = user_id.parse::<i32>()?;
     let connection = super::establish_connection();
-    use schema::loggedinusers::dsl::*;
+    use crate::schema::loggedinusers::dsl::*;
     let logged_in_user = loggedinusers.find(id_).load::<LoggedInUser>(&connection)?;
 
     let diver: Vec<Diver> = Diver::belonging_to(&logged_in_user).load::<Diver>(&connection)?;
@@ -30,7 +30,7 @@ pub fn get_all_users_unique_dives(user_id: &str) -> Result<Vec<Dive>, CliError> 
 
     let dive_ids: Vec<i32> = dives_for_diver.into_iter().map(|f| f.dive_id).collect();
 
-    use schema::dives::dsl::*;
+    use crate::schema::dives::dsl::*;
     let d_ids: Vec<Dive> = dive_ids.into_iter().map(|d| dives.find(d).first::<Dive>(&connection).expect("err")).collect();
 
     Ok(d_ids)
@@ -45,7 +45,7 @@ pub fn get_all_users_dives(user_id: &str) -> Result<Vec<Dive>, CliError> {
 
     let dive_ids: Vec<i32> = dives_for_diver.into_iter().map(|f| f.dive_id).collect();
 
-    use schema::dives::dsl::*;
+    use crate::schema::dives::dsl::*;
     let d_ids: Vec<Dive> = dive_ids.into_iter().map(|d| dives.find(d).first::<Dive>(&connection).expect("err")).collect();
 
     Ok(d_ids)
@@ -61,7 +61,7 @@ pub fn get_trainings(user_id: &str) -> Result<Vec<Training>, CliError> {
         DiversTrainings::belonging_to(&diver).load::<DiversTrainings>(&connection)?;
 
     let training_ids: Vec<i32> = trainings_for_diver.into_iter().map(|f| f.training_id).collect();
-    use schema::trainings::dsl::*;
+    use crate::schema::trainings::dsl::*;
     let  d_ids = training_ids.into_iter().map(|d| trainings.find(d).first::<Training>(&connection).expect("err")).collect();
 
     Ok(d_ids)
@@ -85,6 +85,16 @@ pub fn get_dives_in_training(training: &Training) -> Result<Vec<TrainingsDives>,
     let dives_for_training: Vec<TrainingsDives> =
         TrainingsDives::belonging_to(training).load::<TrainingsDives>(&connection)?;
     Ok(dives_for_training)
+}
+
+
+pub fn get_trainingsdives_from_diveid(_dive_id: &i32, trainings: Vec<Training>) -> Result<Vec<TrainingsDives>, CliError> {
+
+    let connection = super::establish_connection();
+    use crate::schema::trainingsdives::dsl::*;
+    let parents: &[Training] = trainings.as_slice();
+    let trainings_dives = TrainingsDives::belonging_to(parents).filter(dive_id.eq(_dive_id)).load::<TrainingsDives>(&connection)?;
+    Ok(trainings_dives)
 }
 
 pub fn get_dives_in_competition(competition: &Competition) -> Result<Vec<CompetitionDive>, CliError> {

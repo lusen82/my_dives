@@ -1,17 +1,17 @@
 
 #![feature(custom_attribute)]
-#![plugin(rocket_codegen)]
-#![feature(plugin, custom_derive, decl_macro)]
+#![feature(proc_macro_hygiene, decl_macro)]
 #![feature(try_from)]
 #![feature(drain_filter)]
 #![feature(repeat_generic_slice)]
 #![feature(try_trait)]
-#![feature(extern_prelude)]
+#![feature(plugin)]
 
-#[macro_use]
-extern crate diesel;
+#[macro_use] extern crate diesel;
 extern crate dotenv;
-extern crate rocket;
+#[macro_use] extern crate rocket;
+
+extern crate rocket_contrib;
 extern crate serde;
 extern crate serde_json;
 #[macro_use] extern crate serde_derive;
@@ -30,7 +30,10 @@ pub mod template_context;
 pub mod form_data;
 pub mod utils;
 pub mod core_database_api;
+
+pub mod deletion_database_api;
 pub mod statistics_overview;
+pub mod responders;
 
 
 use diesel::prelude::*;

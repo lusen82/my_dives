@@ -2,22 +2,18 @@
 
 {% block content %}
     <div class="w3-container w3-center">
-
-        <b class="w3-wide w3-text-teal">MARGINALEN CUP</b>
-        <p class="w3-justify">Marginalen Cup är avklarad () </p>
-
-        <b class="w3-wide w3-text-teal">DM</b>
-        <p class="w3-justify">Polisen IF anordnade DM lördagen den 24e november (http://www.polisensimhopp.se/docs/147/2993/Resultat%20DM%202018.pdf). </p>
-
-        <b class="w3-wide w3-text-teal">ANNA LINDBERG TRÄNINGSLÄGER</b>
-        <p class="w3-justify">Anna Lindberg arangerar träningsläger var 23e - 25e november.</p>
-
-        <b class="w3-wide w3-text-teal">SK NEPTUN KM</b>
-        <p class="w3-justify">Neptuns Klubbmästerskap för Masters går av stapeln den 12e december 2019. </p>
-
-        <b class="w3-wide w3-text-teal">LALA SPORTS TRÄNINGSLÄGER</b>
-        <p class="w3-justify">Xsenija och Olga anordnar träningsläger med Dimitri Sautin 3e - 9e januari i Aachen i Tyskland. </p>
-
-</div>
+        <b class="w3-wide w3-text-teal">SIMHOPPSLOGGEN</b>
+        <p class="w3-justify w3-text-teal">Vad är simhoppsloggen?</p>
+        <p class="w3-justify">Simhopploggen är en liten liten databas (med en halvt utvecklad web-sida) med tanken att hjälpa oss vuxen-simhoppare att få bättre koll på vad vi övar, vad vi lär oss och vad vi ska välja för hopp att tävla på.</p>
+        <p class="w3-justify w3-text-teal">Hur gör jag för att logga in?</p>
+        <p class="w3-justify">Du kontaktar mig (i.e. Helena Troili) om du vill vara med.</p>
+        <p class="w3-justify w3-text-teal">Hur gör jag för att logga hopp?</p>
+        <p class="w3-justify">Du skapar en "Träning" (med "LOG TRAINING") först och lägger sedan till hopp med "Add dive".</p>
+        <p class="w3-justify w3-text-teal">Finns det någon backup?</p>
+        <p class="w3-justify">Nej tyvärr, om simhoppsloggen får problem kan jag i nuläget inte återställa datat (det är ingen mening med det så länge ingen loggat några större mängder).</p>
+        <b class="w3-wide w3-text-teal">På GÅNG SIMHOPP MASTERS:</b>
+        <b class="w3-justify w3-text-teal">Gamma CUP</b>
+        <p class="w3-justify">Gamma cup går för Masters på fredagen den 1a mars kl 18.30</p>
+    </div>
 
 {% endblock content %}

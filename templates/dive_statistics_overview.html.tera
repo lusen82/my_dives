@@ -3,50 +3,75 @@
 {% block content %}
 
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-
-
 <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
         <div class="w3-third w3-container">
             <h2>Diving groups</h2>
             <canvas id="myPieChartDivingGroups" width="200" height="100"> </canvas>
-          <!--<img src="/w3images/newyork.jpg" alt="New York" style="width:100%" class="w3-hover-opacity">-->
-          <!--<div class="w3-container w3-white">-->
-            <!--<p><b>New York</b></p>-->
-            <!--<p class="w3-opacity">Fri 27 Nov 2016</p>-->
-            <!--<p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>-->
-            <!--<button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('ticketModal').style.display='block'">Buy Tickets</button>-->
-          <!--</div>-->
         </div>
         <div class="w3-third w3-container">
             <h2>Heights</h2>
     <canvas id="myPieChartHeights" width="200" height="100"> </canvas>
-          <!--<img src="/w3images/paris.jpg" alt="Paris" style="width:100%" class="w3-hover-opacity">-->
-          <!--<div class="w3-container w3-white">-->
-            <!--<p><b>Paris</b></p>-->
-            <!--<p class="w3-opacity">Sat 28 Nov 2016</p>-->
-            <!--<p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>-->
-            <!--<button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('ticketModal').style.display='block'">Buy Tickets</button>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="w3-third w3-margin-bottom">-->
-          <!--<img src="/w3images/sanfran.jpg" alt="San Francisco" style="width:100%" class="w3-hover-opacity">-->
-          <!--<div class="w3-container w3-white">-->
-            <!--<p><b>San Francisco</b></p>-->
-            <!--<p class="w3-opacity">Sun 29 Nov 2016</p>-->
-            <!--<p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>-->
-            <!--<button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('ticketModal').style.display='block'">Buy Tickets</button>-->
-          <!--</div>-->
-        <!--</div>-->
+
       </div>
+    <div class="w3-third w3-container">
+    <h2>Competition Dive Status</h2> <b> (Greener is "better", Oranger is "worse"..)</b>
+<canvas id="myPieChartCompDives" width="200" height="100"> </canvas>
+    </div>
+    {% for d in amount_per_dive %}
+               <b> {{ d }} </b>
+           {% endfor %}
 
-<canvas id="myChart" width="200" height="100"></canvas>
+</div>
+<div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+    <div class="w3-container">
+        <h2>Training Dive Status</h2> <b> (Greener is "better", Oranger is "worse"..)</b>
+<canvas id="myDivesBarChart" width="200" height="100"></canvas>
+    </div>
+</div>
+<b id="thecontent"></b>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
        var c = document.getElementById('myPieChartDivingGroups');
        drawChart(c, {{ amount_per_dive_group.0 }}, {{ amount_per_dive_group.1 }}, {{ amount_per_dive_group.2 }}, {{ amount_per_dive_group.3 }}, {{ amount_per_dive_group.4 }});
        var heights = document.getElementById('myPieChartHeights');
        drawChart3(heights, {{ amount_per_height.0 }}, {{ amount_per_height.1 }}, {{ amount_per_height.2 }});
+
+
+       $( document ).ready(function(){
+                   //Perform Ajax request for competition dives.
+                   $.ajax({
+                       url: '/get_data_for_comp_dive',
+                       type: 'get',
+                       dataType: 'json',
+                       success: function(data){
+                            var yourval = jQuery.parseJSON(JSON.stringify(data));
+                            var compDives = document.getElementById('myPieChartCompDives');
+                            drawCDBar(compDives, yourval)
+                       },
+                       error: function (xhr, ajaxOptions, thrownError) {
+                           var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                           alert(errorMsg);
+                         }
+                   });
+                    //Perform Ajax request for all dives.
+                   $.ajax({
+                          url: '/get_data_for_dive',
+                          type: 'get',
+                          dataType: 'json',
+                          success: function(data){
+                               var yourval = jQuery.parseJSON(JSON.stringify(data));
+                               var divesives = document.getElementById('myDivesBarChart');
+                               drawCDBar(divesives, yourval)
+                          },
+                          error: function (xhr, ajaxOptions, thrownError) {
+                              var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                              alert(errorMsg);
+
+                            }
+                      });
+               });
+
     </script>
 {% endblock content %}
 
