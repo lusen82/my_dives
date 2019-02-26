@@ -119,13 +119,14 @@ fn get_add_competition<'a>(cookies: Cookies,
 #[post("/present_selected_training", data = "<select_training>")]
 fn present_selected_training<'a>(cookies: Cookies,
                                  select_training: Form<SelectTraining>) -> Template {
-    println!("In selected training presentation");
+
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         let name = database_api::get_name_of_logged_in_user(user_id.as_str());
         let training: &SelectTraining = &select_training;
 
         if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
-            let trainings = utils::get_trainings_statics(training_data);
+            let trainings = utils::get_trainings_statics(&training_data);
+            let months = utils::get_month_statics(&training_data);
 
             if let Ok(dives_for_training) = database_api::get_dives_for_training(training.id) {
                 let id_ = training.id.trim_matches('+');
@@ -137,7 +138,8 @@ fn present_selected_training<'a>(cookies: Cookies,
                                             trainings,
                                             selected_training: Some(id_.to_string()),
                                             dives_for_training,
-                                            successful_add: None
+                                            successful_add: None,
+                                            months,
                                         });
             }
         }
@@ -149,7 +151,7 @@ fn present_selected_training<'a>(cookies: Cookies,
 #[post("/delete_training", data = "<select_training>")]
 fn delete_training<'a>(cookies: Cookies,
                        select_training: Form<SelectTraining>) -> Template {
-    println!("In selected training presentation");
+
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         let name = database_api::get_name_of_logged_in_user(user_id.as_str());
         let training: &SelectTraining = &select_training;
@@ -158,7 +160,8 @@ fn delete_training<'a>(cookies: Cookies,
         let _result = database_api::delete_training(id_);
         // TODO handle _result.
         if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
-            let trainings = utils::get_trainings_statics(training_data);
+            let trainings = utils::get_trainings_statics(&training_data);
+                        let months = utils::get_month_statics(&training_data);
 
             return Template::render("trainings",
                                         TemplateContextTrainingsAndDives {
@@ -166,13 +169,27 @@ fn delete_training<'a>(cookies: Cookies,
                                             trainings,
                                             selected_training: None,
                                             dives_for_training: vec![],
-                                            successful_add: None
+                                            successful_add: None,
+                                            months,
                                         });
 
         }
     }
 
     return Template::render("index", TemplateContext { name: None });
+}
+
+#[post("/delete_dive", data = "<select_dive>")]
+fn delete_dive<'a>(cookies: Cookies, select_dive: String) {
+
+    println!("In delete dive {}", &select_dive);
+    if let Some(user_id) = utils::check_if_login_cookie(cookies) {
+        let name = database_api::get_name_of_logged_in_user(user_id.as_str());
+       let id_ = select_dive.trim_matches('+').trim();   // This is the trainingsdive's id, be aware..
+        let _result = database_api::delete_dive(id_);
+    }
+
+
 }
 
 #[post("/present_selected_competition", data = "<select_competition>")]
@@ -219,8 +236,8 @@ fn present_selected_dive<'a>(cookies: Cookies,
                         .collect();
 
                 let (times_for_training, statistics_for_dive): (Vec<String>, Vec<String>) = stats_for_dive.into_iter().unzip();
-                println!("times_for_training count {}, first {}", times_for_training.len(), times_for_training.get(0).unwrap());
                 let id_ = dive.id.trim_matches('+');
+
                 return Template::render("dives", TemplateContextStatisticsForDive {
                     name,
                     dives,
@@ -236,19 +253,20 @@ fn present_selected_dive<'a>(cookies: Cookies,
         trainings: vec![],
         selected_training: None,
         dives_for_training: vec![],
-        successful_add: None});
+        successful_add: None, months:vec![]});
 }
 
 #[post("/get_log_training", data = "<get_log_training>")]
 fn get_log_training<'a>(cookies: Cookies, get_log_training: Form<LogDive>) -> Template {
     if let Some(user_id) = utils::check_if_login_cookie(cookies) {
         let dive: &LogDive = &get_log_training;
-
+        println!("Dive to add: {} h: {}", &dive.dive, &dive.height);
         let name = database_api::get_name_of_logged_in_user(user_id.as_str());
         if let Ok(()) = database_api::log_dives_on_training(user_id.as_str(), dive) {
             if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
 
-                let trainings = utils::get_trainings_statics(training_data);
+                let trainings = utils::get_trainings_statics(&training_data);
+                let months = utils::get_month_statics(&training_data);
 
                 return Template::render("log_training",
                                         TemplateContextTrainingsAndDives {
@@ -256,20 +274,23 @@ fn get_log_training<'a>(cookies: Cookies, get_log_training: Form<LogDive>) -> Te
                                             trainings,
                                             selected_training: Some(dive.training_id.to_string()),
                                             dives_for_training: vec![],
-                                            successful_add: Some("Added dive".to_string())
+                                            successful_add: Some("Added dive".to_string()),
+                                            months
                                         });
             }
         }
         else {
             if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
-                let trainings = utils::get_trainings_statics(training_data);
+                let trainings = utils::get_trainings_statics(&training_data);
+                            let months = utils::get_month_statics(&training_data);
                 return Template::render("log_training",
                                         TemplateContextTrainingsAndDives {
                                             name,
                                             trainings,
                                             selected_training: Some(dive.training_id.to_string()),
                                             dives_for_training: vec![],
-                                            successful_add: Some("Failed to add dive.".to_string())
+                                            successful_add: Some("Failed to add dive.".to_string()),
+                                            months
                                         });
             }
         }
@@ -317,11 +338,13 @@ fn get_log_training_form(cookies: Cookies) -> Template {
         if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
             let name = database_api::get_name_of_logged_in_user(user_id.as_str());
 
-            let trainings = utils::get_trainings_statics(training_data);
+            let trainings = utils::get_trainings_statics(&training_data);
+            let months = utils::get_month_statics(&training_data);
 
             return Template::render("log_training",
                                     TemplateContextTrainingsAndDives {
-                                        name, trainings, selected_training: None, dives_for_training: vec![], successful_add: None });
+                                        name, trainings, selected_training: None,
+                                        dives_for_training: vec![], successful_add: None, months });
         }
     }
     return Template::render("index", TemplateContext { name: None });
@@ -410,6 +433,7 @@ pub fn get_stats_overview(cookies: Cookies) -> Template {
 
 use rocket::response::content;
 use std::str::FromStr;
+use std::process::Command;
 
 #[get("/get_data_for_comp_dive")]
 pub fn get_data_for_comp_dive(cookies: Cookies) -> content::Json<&'static str> {
@@ -440,6 +464,15 @@ pub fn get_data_for_dive(cookies: Cookies) -> content::Json<&'static str> {
         }
     }
     return content::Json("{ 'something': 'went wrong' }");
+}
+
+#[get("/get_git_revision")]
+pub fn get_git_revision() -> content::Plain<&'static str> {
+
+    let  ret: String = format!("{}", env!("GIT_HASH"));
+
+    println!("{}", &ret);
+    return content::Plain(string_to_static_str(ret));
 }
 
 fn string_to_static_str(s: String) -> &'static str {
@@ -499,12 +532,12 @@ fn trainings(cookies: Cookies) -> Template {
         if let Ok(training_data) = database_api::get_trainings(user_id.as_str()) {
             let name = database_api::get_name_of_logged_in_user(user_id.as_str());
 
-            let trainings = utils::get_trainings_statics(training_data);
-
+            let trainings = utils::get_trainings_statics(&training_data);
+            let months = utils::get_month_statics(&training_data);
             return Template::render("trainings",
                                     TemplateContextTrainingsAndDives {
                                         name, trainings, selected_training: None,
-                                        dives_for_training: vec![] , successful_add: None });
+                                        dives_for_training: vec![] , successful_add: None, months });
         }
     }
     return Template::render("index", TemplateContext { name: None });
@@ -577,16 +610,17 @@ fn err(x: Error) -> Result<NamedFile, Error> { Err(x) }
 fn rocket() -> rocket::Rocket {
     rocket::ignite()
         .mount("/", routes![index, get_dives, login, register,
-        get_log_training_form,get_add_training, get_log_training, present_selected_training,delete_training,
+        get_log_training_form,get_add_training, get_log_training, present_selected_training,delete_training, delete_dive,
         competitions, competition_dives, get_log_competition_form,get_add_competition,
         get_log_competition, present_selected_competition,
         present_selected_dive, present_selected_competition_dive, login_page,
-        register_page, static_content, get_stats_overview, get_data_for_comp_dive, get_data_for_dive, trainings])
+        register_page, static_content, get_stats_overview, get_data_for_comp_dive, get_data_for_dive, trainings, get_git_revision])
         .attach(Template::fairing())
 }
 
 
 fn main() {
+
     rocket().launch();
 }
 

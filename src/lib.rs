@@ -34,6 +34,7 @@ pub mod core_database_api;
 pub mod deletion_database_api;
 pub mod statistics_overview;
 pub mod responders;
+pub mod export_to_csv;
 
 
 use diesel::prelude::*;

@@ -7,7 +7,6 @@ use crate::schema::{trainings, trainingsdives, diverstrainings};
 use crate::utils::CliError;
 
 pub fn delete_training(training_i_d: &str) -> Result<(), CliError> {
-    println!("deleting training {}", &training_i_d);
 
     let connection = super::establish_connection();
 
@@ -25,6 +24,15 @@ pub fn delete_training(training_i_d: &str) -> Result<(), CliError> {
   //  use schema::diverstrainings::dsl::*;
 
     delete(diverstrainings::dsl::diverstrainings.filter(diverstrainings::training_id.eq(training_id_))).execute(&connection)?;
+
+    Ok(())
+}
+
+pub fn delete_dive(dive_i_d: &str) -> Result<(), CliError> {
+
+    let connection = super::establish_connection();
+    let dive_id_ = dive_i_d.parse::<i32>()?;
+    delete(trainingsdives::dsl::trainingsdives.filter(trainingsdives::id.eq(dive_id_))).execute(&connection)?;
 
     Ok(())
 }

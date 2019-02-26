@@ -8,6 +8,7 @@ use std::str::Utf8Error;
 use crate::models::Competition;
 
 
+
 pub enum CliError {
     Option(NoneError),
     ParseIntError(num::ParseIntError),
@@ -60,8 +61,49 @@ impl  From<Utf8Error> for CliError {
         }
 }
 
-pub fn get_trainings_statics(training_data: Vec<Training>) -> Vec<(String, String)> {
-    return training_data.into_iter().map(|f| (format!("{}", &f.id), f.date_time)).collect();
+use chrono::format::parse;
+use chrono::format::Parsed;
+use chrono::NaiveDate;
+use chrono::Datelike;
+
+pub fn get_trainings_statics(training_data: &Vec<Training>) -> Vec<(String, String, String)> {
+    return training_data.into_iter().flat_map(|f| {
+        let id = format!("{}", &f.id);
+
+        let dt = format!("{}", &f.date_time);
+        println!("dt {}", dt);
+        if let Ok(date) = NaiveDate::parse_from_str(dt.as_str(), "%Y-%m-%d") {
+
+
+        let month: u32 = date.month();
+        let year: u32 = date.year() as u32;
+        let result = format!("{}{}", year, month);
+        return Some((result, id, dt));
+        }
+        else{
+            return None;
+        }
+
+    }).collect();
+}
+
+pub fn get_month_statics(training_data: &Vec<Training>) -> Vec<String> {
+    let vec : Vec<String> = training_data.into_iter().flat_map(|f| {
+        let dt = &f.date_time;
+
+        if let Ok(date) = NaiveDate::parse_from_str(dt.as_str(), "%Y-%m-%d") {
+            let month: u32 = date.month();
+            let year: u32 = date.year() as u32;
+            let result = format!("{}{}", year, month);
+            return Some(result);
+        } else {
+            return None;
+        }
+    }).collect();
+    let mut vvec = vec;
+    vvec.sort();
+    vvec.dedup();
+    return vvec;
 }
 
 

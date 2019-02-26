@@ -2,25 +2,58 @@
 
 {% block content %}
 
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
+
 <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
         <div class="w3-quarter w3-container">
             <table class="w3-table-all">
                      <tr>
             <th>Trainings (index):</th>
                        </tr>
-                    {% for s in trainings %}
-                        <tr><td>
-                            <form id="my_form" action="/present_selected_training" method="post" accept-charset="utf-8">
-                            <button name="id" value=" {{ s.0 }} "
+                    {% for s in months %}
+                <input type="hidden" id="myMonthVar" name="variable" value="divelist'{{ s }}'">
+                <tr>
+                                <td>
+                                    <button onclick="expandSection('{{ s }}')">{{ s }}</button>
+                                </td>
+                            </tr>
 
-                                    {% if  s.0 == selected_training %}
-                                    class="w3-button w3-white w3-border w3-border-blue"
-                                    {% else %}
-                                    class="w3-button w3-grey w3-border"
-                                    {% endif %}  >{{ s.1 }}</button>
+                <td id="{{ s }}" class="w3-hide">
+                               <div class="w3-bar w3-hide-small">
+                                   {% for d in dives_for_training %}
+                                   {% if d.0 == "{{ s }}" %}
 
-                            </form></td>
-                       </tr>
+                                   <form id="my_form1" action="/present_selected_dive" method="post" accept-charset="utf-8">
+                                       <button {% if d.1== selected_dive %} class="w3-button w3-white w3-border w3-border-blue" {% else %}
+                                               class="w3-button w3-white w3-border" {% endif %} name="id" value=" {{ d.0 }} ">{{ d.1 }}
+                                       </button>
+                                   </form>
+                                   {% endif %}
+                                   {% endfor %}
+                               </div>
+                               <div class="w3-row w3-hide-medium w3-hide-large">
+                                   <button onclick="toggle_navi(divelist)" class="w3-text-teal w3-button w3-block w3-left-align w3-round">
+                                       Dive ..
+                                   </button>
+                                   <div id="$('myMonthVar').val" class="w3-hide">
+
+                                       {% for d in dives_for_training %}
+                                       {% if d.0 == "{{ s }}" %}
+
+                                       <form id="my_form_narrow" action="/present_selected_dive" method="post" accept-charset="utf-8">
+                                           <button {% if d.0== selected_dive %} class="w3-button w3-white w3-border w3-border-blue" {% else %}
+                                                   class="w3-button w3-white w3-border" {% endif %} name="id" onclick="toggle_navi(divelist)"
+                                                   value=" {{ d.0 }} ">{{ d.1 }}
+                                           </button>
+                                       </form>
+                                       {% endif %}
+                                       {% endfor %}
+                                   </div>
+                               </div>
+                           </td>
+
+
                     {% endfor %}
             </table>
 
@@ -30,12 +63,16 @@
             <table class="w3-table-all">
                 <th>Height and dive:</th>
 
-                    {% for s in dives_for_training %}
+                    {% for v in dives_for_training %}
 
-                <tr><td > {{ s.0 }} </td></tr>
+                <tr><td > {{ v.1 }} </td>
+                    <td>
+                        <button name="id" class="w3-button w3-white w3-border w3-border-blue" id="delete_dive" value=" {{ v.0 }} " onclick="delete_dive_function()">Delete dive</button>
+                    </td>
+                </tr>
 
-                        <tr><td style="color:{%if s.1 == 1 %}red{% elif s.1 == 2 %} orange{% elif s.1 == 3 %} yellow {% elif s.1 == 4 %} lightgreen {% elif s.1 == 5 %}green  {% else %} black{% endif %} ;"> {{ s.0 }} </td></tr>
-
+                       <!-- <tr><td style="color:{%if s.1 == 1 %}red{% elif s.1 == 2 %} orange{% elif s.1 == 3 %} yellow {% elif s.1 == 4 %} lightgreen {% elif s.1 == 5 %}green  {% else %} black{% endif %} ;"> {{ s.0 }} </td></tr>
+                           -->
                 {% endfor %}
             </table>
             <form id="my_form_2" action="/delete_training" method="post" accept-charset="utf-8">
@@ -45,5 +82,46 @@
             {% endif %}
       </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script>
+       function delete_dive_function() {
+             var inp = document.getElementById("delete_dive").value;
+
+             $.ajax({
+                 url: '/delete_dive',
+                 type: 'post',
+                 dataType: 'text',
+                 data: inp,
+                 success: function(){
+                    window.location.reload();
+                 },
+                 error: function (xhr, ajaxOptions, thrownError) {
+                     var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                     alert(errorMsg);
+                   }
+             });
+
+         };
+
+     function toggle_navi(id) {
+     var myVar = document.getElementById("myMonthVar").value;
+               var x = document.getElementById(id + myVar);
+               alert(x);
+               if (x.className.indexOf("w3-show") == -1) {
+                   x.className += " w3-show";
+               } else {
+                   x.className = x.className.replace(" w3-show", "");
+               }
+           }
+  function expandSection(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+          </script>
 
 {% endblock content %}

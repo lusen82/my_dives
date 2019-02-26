@@ -41,10 +41,11 @@ pub struct TemplateContextCompetitionDivesAndData {
 #[derive(Serialize)]
 pub struct TemplateContextTrainingsAndDives {
     pub name: Option<String>,
-    pub trainings: Vec<(String, String)>,
+    pub trainings: Vec<(String, String, String)>,   // yearmonth, date, text
     pub selected_training: Option<String>,
-    pub dives_for_training: Vec<(String, String)>,
-    pub successful_add: Option<String>
+    pub dives_for_training: Vec<(String, String, String)>,
+    pub successful_add: Option<String>,
+    pub months: Vec<String>,
 }
 
 #[derive(Serialize)]

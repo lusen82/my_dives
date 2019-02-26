@@ -182,7 +182,7 @@ pub fn log_dives_on_training(user_id: &str, dive: &LogDive) -> Result<(), CliErr
 
     let dive_code = dive.dive.to_string().to_uppercase();
     let  height_val = dive.height.replace("+", " ").to_string();
-
+    println!("heihgt_val {}", &height_val);
     let connection = super::establish_connection();
 
     use crate::schema::dives::dsl::*;
@@ -251,7 +251,7 @@ pub fn get_users_unique_dives(user_id: &str) -> Result<Vec<Dive>, CliError> {
     Ok(d_ids)
 }
 
-pub fn get_dives_for_training(training_id: &str) -> Result<Vec<(String, String)>, CliError> {
+pub fn get_dives_for_training(training_id: &str) -> Result<Vec<(String, String, String)>, CliError> {
 
     let id_: i32 = training_id.trim_matches('+').parse::<i32>()?;
 
@@ -261,12 +261,13 @@ pub fn get_dives_for_training(training_id: &str) -> Result<Vec<(String, String)>
 
     let dives_in_training: Vec<TrainingsDives> = core_database_api::get_dives_in_training(&found_training)?;
 
-    let dives_for_training: Vec<(String, String)> = dives_in_training.into_iter().map(
+    let dives_for_training: Vec<(String, String, String)> = dives_in_training.into_iter().map(
         |f| {
             use crate::schema::dives::dsl::*;
             let code_and_height: Dive = dives.find(f.dive_id).first::<Dive>(&connection).expect("err");
 
-            let str = (format!("{} on {} : {} times. Comment: {}",
+            let str = (format!("{}", f.id),
+                       format!("{} on {} : {} times. Comment: {}",
                                                    code_and_height.code,
                                                    code_and_height.height, f.nr_of_times, f.comment),
                        format!("{}", f.feeling));
@@ -317,7 +318,10 @@ pub fn get_stats_for_dive(dive_id: &str, user_id: &str) -> Result<Vec<(String, S
             let stamp = &t.date_time;
             let stamp_str = format!("{}", &stamp);
             let trimmed: String = stamp_str.replace("-", "");
-            let tr = trimmed;
+            let tr: String = trimmed;
+            if  tr.is_empty() {
+                return None;
+            }
             if let Ok(mut vec) = core_database_api::get_dives_in_training(&t) {
                 let dive: Vec<TrainingsDives> = vec.drain_filter(|ssd| {
                     ssd.dive_id.eq(&this_dive.id)
@@ -369,6 +373,12 @@ pub fn delete_training(training_id_: &str) -> Result<(), CliError> {
     println!("deleting training {}", &training_id_);
 
     deletion_database_api::delete_training(training_id_)
+}
+
+pub fn delete_dive(dive_id_: &str) -> Result<(), CliError> {
+    println!("deleting dive {}", &dive_id_);
+
+    deletion_database_api::delete_dive(dive_id_)
 }
 
 pub fn get_competitions(user_id: &str) -> Result<Vec<Competition>, CliError> {

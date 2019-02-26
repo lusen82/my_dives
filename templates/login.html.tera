@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
     <meta charset="utf-8" />
 <style>
 body {background-color: powderblue;
@@ -13,7 +13,6 @@ font-family: 'Open Sans', sans-serif;
 </style>
     <title>Log in to my diving portal..</title>
 
-  <body>
   <div>
     {% block content %}
 
@@ -36,12 +35,12 @@ font-family: 'Open Sans', sans-serif;
       <br />
       <div>
           <b>SIMHOPPSLOGGEN</b>
-                 <p> - Vad är simhoppsloggen?</p>
-                 <p>Simhopploggen är en liten liten databas (med en halvt utvecklad web-sida) med tanken att hjälpa oss vuxen-simhoppare att få bättre koll på vad vi övar, vad vi lär oss och vad vi ska välja för hopp att tävla på.</p>
+          <p> - Vad är simhoppsloggen?</p>
+          <p>Simhopploggen är en liten liten databas (med en halvt utvecklad web-sida) med tanken att hjälpa oss vuxen-simhoppare att få bättre koll på vad vi övar, vad vi lär oss och vad vi ska välja för hopp att tävla på.</p>
           <p> - Hur gör jag för att logga in?</p>
           <p>Du kontaktar mig (i.e. Helena Troili) om du vill vara med.</p>
           <p> - Hur gör jag för att logga hopp?</p>
-                                 <p>Du skapar en "Träning" (med "LOG TRAINING") först och lägger sedan till hopp med "Add dive".</p>
+          <p>Du skapar en "Träning" (med "LOG TRAINING") först och lägger sedan till hopp med "Add dive".</p>
           <p> - Finns det någon backup?</p>
           <p class="w3-justify">Nej tyvärr, om simhoppsloggen får problem kan jag i nuläget inte återställa datat (det är ingen mening med det så länge ingen loggat några större mängder).</p>
           <b>PÅ GÅNG I MASTERSSIMHOPP:</b>
@@ -49,5 +48,29 @@ font-family: 'Open Sans', sans-serif;
       </div>
       {% endblock content %}
   </div>
+  <br />
+  <div>
+      <p>Currently deployed GIT version: <b id="gitversion"></b></p>
+  </div>
+
   </body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script>
+       $( document ).ready(function(){
+             $.ajax({
+                 url: '/get_git_revision',
+                 type: 'get',
+                 dataType: 'text',
+                 success: function(data){
+                      $('#gitversion').html(data);
+                 },
+                 error: function (xhr, ajaxOptions, thrownError) {
+                     var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                     alert(errorMsg);
+                   }
+             });
+
+         });
+
+          </script>
 </html>

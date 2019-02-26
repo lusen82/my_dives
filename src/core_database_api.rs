@@ -62,8 +62,8 @@ pub fn get_trainings(user_id: &str) -> Result<Vec<Training>, CliError> {
 
     let training_ids: Vec<i32> = trainings_for_diver.into_iter().map(|f| f.training_id).collect();
     use crate::schema::trainings::dsl::*;
-    let  d_ids = training_ids.into_iter().map(|d| trainings.find(d).first::<Training>(&connection).expect("err")).collect();
-
+    let mut d_ids: Vec<Training> = training_ids.into_iter().map(|d| trainings.find(d).first::<Training>(&connection).expect("err")).collect();
+    d_ids.sort_by(|d, e| d.date_time.cmp(&e.date_time));
     Ok(d_ids)
 }
 

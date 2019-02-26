@@ -137,7 +137,7 @@ pub fn get_amount_dives(user_id: &str) -> Result<CompDivesForBarChart, CliError>
             let trainings_dives: Vec<TrainingsDives> = core_database_api::get_trainingsdives_from_diveid(&did, users_trainings).ok().unwrap();
 
             let amount_of_dives: i32 = trainings_dives.iter().fold(0, |acc, val| {
-                println!("acc {}", &acc);
+                
                 return acc + val.nr_of_times as i32;
             });
             let vec_of_statuses: Vec<i16> = trainings_dives.iter().map(|td| td.feeling).collect();
